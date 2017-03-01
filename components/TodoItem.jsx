@@ -36,13 +36,10 @@ class TodoItem extends Component {
     const checkBoxColor = (todo.dueDate && moment().isAfter(todo.dueDate)) ? '#cb0044' : palette.accent1Color;
 
     return (
-      <div className={classnames({completed: todo.completed})}>
-        <ListItem primaryText={todo.text}
-                  onTouchTap={() => completeTodo(todo.id)}
-                  leftIcon={todo.completed ? <CheckBoxIcon color={palette.disabledColor} /> : <CheckBoxBlankIcon color={checkBoxColor} />}
-                  rightIconButton={rightIconMenu}
-        />
-      </div>
+      <ListItem primaryText={todo.name}
+                onTouchTap={() => completeTodo(todo._id)}
+                leftIcon={todo.completed ? <CheckBoxIcon color={palette.disabledColor} /> : <CheckBoxBlankIcon color={checkBoxColor} />}
+                rightIconButton={rightIconMenu}/>
     );
   }
 }

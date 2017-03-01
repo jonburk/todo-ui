@@ -42,11 +42,13 @@ class Footer extends Component {
 
     return (
       <footer className="footer">        
-        <BottomNavigation zDepth={3} selectedIndex={1} style={defaultStyle}>
-          {filters.map(filter =>
-            this.renderFilterLink(filter)
-          )}          
-        </BottomNavigation>
+        <Paper zDepth={3}>
+          <BottomNavigation selectedIndex={1} style={defaultStyle}>
+            {filters.map(filter =>
+              this.renderFilterLink(filter)
+            )}          
+          </BottomNavigation>
+        </Paper>
       </footer>
     );
   }

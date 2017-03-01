@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
-import TodoItem from './TodoItem';
+import TodoCategory from './TodoCategory';
 import { SHOW_ALL, SHOW_COMPLETED, SHOW_ACTIVE } from '../constants/TodoFilters';
-import { Checkbox, List } from 'material-ui';
+import { List } from 'material-ui';
 
 class MainSection extends Component {
   constructor(props, context) {
@@ -16,8 +16,10 @@ class MainSection extends Component {
     return (
       <section className="body">
         <List className="todo-list">
-          {todos.map(todo =>
-            <TodoItem key={todo.id} todo={todo} {...actions} />
+          {todos.map(category =>
+            <TodoCategory category={category} 
+                          key={category._id}
+                          actions={actions}/>
           )}
         </List>
       </section>
