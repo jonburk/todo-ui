@@ -4,17 +4,6 @@ import Footer from './Footer';
 import { SHOW_ALL, SHOW_COMPLETED, SHOW_ACTIVE } from '../constants/TodoFilters';
 import { Checkbox, List } from 'material-ui';
 
-const defaultStyle = {
-  width: 300,
-  marginLeft: 20
-};
-
-const TODO_FILTERS = {
-  [SHOW_ALL]: () => true,
-  [SHOW_ACTIVE]: todo => !todo.completed,
-  [SHOW_COMPLETED]: todo => todo.completed
-};
-
 class MainSection extends Component {
   constructor(props, context) {
     super(props, context);
@@ -41,12 +30,10 @@ class MainSection extends Component {
     const { todos, actions } = this.props;
     const { filter } = this.state;
 
-    const filteredTodos = todos.filter(TODO_FILTERS[filter]);
-
     return (
-      <section className="main" style={defaultStyle}>
+      <section className="main">
         <List className="todo-list">
-          {filteredTodos.map(todo =>
+          {todos.map(todo =>
             <TodoItem key={todo.id} todo={todo} {...actions} />
           )}
         </List>
