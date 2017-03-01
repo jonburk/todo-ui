@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
 import { ListItem, IconButton, IconMenu, MenuItem } from 'material-ui';
 import muiThemeable from 'material-ui/styles/muiThemeable';
+import moment from 'moment';
 
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import CheckBoxIcon from 'material-ui/svg-icons/toggle/check-box';
@@ -14,11 +15,12 @@ import DeleteIcon from 'material-ui/svg-icons/action/delete';
 class TodoItem extends Component {
   render() {
     const { todo, completeTodo } = this.props;
+    const { palette } = this.props.muiTheme;
 
     const rightIconMenu = (
       <IconMenu iconButtonElement={
           <IconButton>
-            <MoreVertIcon color={this.props.muiTheme.palette.primary3Color} />
+            <MoreVertIcon color={palette.primary3Color} />
           </IconButton>
         }
       >
@@ -31,11 +33,13 @@ class TodoItem extends Component {
       </IconMenu>
     );
 
+    const checkBoxColor = (todo.dueDate && moment().isAfter(todo.dueDate)) ? '#cb0044' : palette.accent1Color;
+
     return (
       <div className={classnames({completed: todo.completed})}>
         <ListItem primaryText={todo.text}
                   onTouchTap={() => completeTodo(todo.id)}
-                  leftIcon={todo.completed ? <CheckBoxIcon /> : <CheckBoxBlankIcon />}
+                  leftIcon={todo.completed ? <CheckBoxIcon color={palette.disabledColor} /> : <CheckBoxBlankIcon color={checkBoxColor} />}
                   rightIconButton={rightIconMenu}
         />
       </div>

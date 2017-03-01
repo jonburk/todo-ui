@@ -3,7 +3,8 @@ import { ADD_TODO, DELETE_TODO, EDIT_TODO, COMPLETE_TODO, COMPLETE_ALL, CLEAR_CO
 const initialState = [{
   text: 'Use Redux',
   completed: false,
-  id: 0
+  id: 0,
+  dueDate: '2017-01-01'
 }];
 
 export default function todos(state = initialState, action) {
