@@ -6,17 +6,17 @@ const rawBaseTheme = {
   ...spacing,
   fontFamily: 'Roboto, sans-serif',
   palette: {
-    primary1Color: Colors.cyan500,
-    primary2Color: Colors.cyan700,
-    primary3Color: Colors.lightBlack,
-    accent1Color: Colors.pinkA200,
-    accent2Color: Colors.grey100,
-    accent3Color: Colors.grey500,
-    textColor: Colors.darkBlack,
+    primary1Color: '#3095b4',
+    primary2Color: '#5c7f92',
+    primary3Color: '#8b8178',
+    accent1Color: '#8e258d',
+    accent2Color: '#a0d200',
+    accent3Color: '#f0ab00',
+    textColor: '#35322E',
     alternateTextColor: Colors.white,
     canvasColor: Colors.white,
-    borderColor: Colors.grey300,
-    disabledColor: fade(Colors.darkBlack, 0.3)
+    borderColor: '#a59d95',
+    disabledColor: '#b7b1a9'
   }
 };
 
