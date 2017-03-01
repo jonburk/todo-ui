@@ -1,5 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 import TodoTextInput from './TodoTextInput';
+import IconButton from 'material-ui/IconButton';
+import RefreshIcon from 'material-ui/svg-icons/navigation/refresh';
 
 import AppBar from 'material-ui/AppBar';
 
@@ -17,7 +19,9 @@ class Header extends Component {
   render() {
     return (
       <header className="header">
-          <AppBar title="React + Redux + Material UI Boilerplate" />
+          <AppBar title="Todo"
+                  showMenuIconButton={false}
+                  iconElementRight={<IconButton title="Refresh"><RefreshIcon/></IconButton>} />
           <h1 style={defaultStyle} >todos</h1>
           <TodoTextInput newTodo
                          onSave={this.handleSave.bind(this)}
