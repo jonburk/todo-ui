@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from "react";
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 import MainSection from '../components/MainSection';
 import * as TodoActions from '../actions/todos';
 
@@ -17,8 +18,9 @@ class App extends Component {
       <div>
         <MuiThemeProvider muiTheme={theme}>
           <div>
-            <Header addTodo={actions.addTodo}/>
+            <Header/>
             <MainSection todos={todos} actions={actions}/>
+            <Footer/>
           </div>
         </MuiThemeProvider>
       </div>

@@ -1,14 +1,13 @@
 import React, { PropTypes, Component } from 'react';
 import classnames from 'classnames';
 import { SHOW_ALL, SHOW_COMPLETED, SHOW_ACTIVE } from '../constants/TodoFilters';
-import { RaisedButton, List, ListItem, Divider, BottomNavigation, BottomNavigationItem } from 'material-ui';
+import { Paper, BottomNavigation, BottomNavigationItem } from 'material-ui';
 
 import TodayIcon from 'material-ui/svg-icons/action/today';
 import ListIcon from 'material-ui/svg-icons/action/list';
 import AddIcon from 'material-ui/svg-icons/content/add';
 
 import palette from '../src/material_ui_raw_theme_file';
-
 
 const FILTER_TITLES = {
   [SHOW_ALL]: 'Due Today',
@@ -22,6 +21,10 @@ const FILTER_ICONS = {
   [SHOW_COMPLETED]: <AddIcon />
 };
 
+const defaultStyle = {
+  backgroundColor: '#EDE9E1'
+}
+
 class Footer extends Component {
   renderFilterLink(filter) {
     const title = FILTER_TITLES[filter];
@@ -30,20 +33,16 @@ class Footer extends Component {
     return (
       <BottomNavigationItem key={filter} 
                             label={title}
-                            icon={FILTER_ICONS[filter]}
-                            onTouchTap={() => onShow(filter)} />
+                            icon={FILTER_ICONS[filter]}/>
     );
   }
 
   render() {
-    const { filter } = this.props;
     const filters = [SHOW_ALL, SHOW_ACTIVE, SHOW_COMPLETED];
-    const selectedIndex = filters.indexOf(filter);
 
     return (
-      <footer className="footer">
-        <Divider style={{marginTop: 10}}/>
-        <BottomNavigation selectedIndex={selectedIndex}>
+      <footer className="footer">        
+        <BottomNavigation zDepth={3} selectedIndex={1} style={defaultStyle}>
           {filters.map(filter =>
             this.renderFilterLink(filter)
           )}          
@@ -52,10 +51,5 @@ class Footer extends Component {
     );
   }
 }
-
-Footer.propTypes = {
-  filter: PropTypes.string.isRequired,
-  onShow: PropTypes.func.isRequired
-};
 
 export default Footer;
