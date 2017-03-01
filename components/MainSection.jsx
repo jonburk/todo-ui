@@ -21,41 +21,17 @@ class MainSection extends Component {
     this.state = { filter: SHOW_ALL };
   }
 
-  handleClearCompleted() {
-    const atLeastOneCompleted = this.props.todos.some(todo => todo.completed);
-    if (atLeastOneCompleted) {
-      this.props.actions.clearCompleted();
-    }
-  }
-
   handleShow(filter) {
     this.setState({ filter });
   }
 
-  renderToggleAll(completedCount) {
-    const { todos, actions } = this.props;
-    if (todos.length > 0) {
-      return (
-        <Checkbox className="toggle-all"
-                  style={{marginBottom: 10}}
-                  label="Toggle All"
-                  defaultChecked={completedCount === todos.length}
-                  onCheck={actions.completeAll} />
-      );
-    }
-  }
-
-  renderFooter(completedCount) {
-    const { todos } = this.props;
+  renderFooter() {
     const { filter } = this.state;
-    const activeCount = todos.length - completedCount;
+    const { todos } = this.props;
 
     if (todos.length) {
       return (
-        <Footer completedCount={completedCount}
-                activeCount={activeCount}
-                filter={filter}
-                onClearCompleted={this.handleClearCompleted.bind(this)}
+        <Footer filter={filter}
                 onShow={this.handleShow.bind(this)} />
       );
     }
@@ -66,20 +42,15 @@ class MainSection extends Component {
     const { filter } = this.state;
 
     const filteredTodos = todos.filter(TODO_FILTERS[filter]);
-    const completedCount = todos.reduce((count, todo) =>
-      todo.completed ? count + 1 : count,
-      0
-    );
 
     return (
       <section className="main" style={defaultStyle}>
-        {this.renderToggleAll(completedCount)}
         <List className="todo-list">
           {filteredTodos.map(todo =>
             <TodoItem key={todo.id} todo={todo} {...actions} />
           )}
         </List>
-        {this.renderFooter(completedCount)}
+        {this.renderFooter()}
       </section>
     );
   }
