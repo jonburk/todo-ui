@@ -14,7 +14,7 @@ import DeleteIcon from 'material-ui/svg-icons/action/delete';
 
 class TodoItem extends Component {
   render() {
-    const { todo, completeTodo } = this.props;
+    const { todo } = this.props;
     const { palette } = this.props.muiTheme;
 
     const rightIconMenu = (
@@ -37,10 +37,20 @@ class TodoItem extends Component {
 
     return (
       <ListItem primaryText={todo.name}
-                onTouchTap={() => completeTodo(todo._id)}
+                onTouchTap={() => this.toggleTodo(todo)}
                 leftIcon={todo.completed ? <CheckBoxIcon color={palette.disabledColor} /> : <CheckBoxBlankIcon color={checkBoxColor} />}
                 rightIconButton={rightIconMenu}/>
     );
+  }
+
+  toggleTodo(todo) {
+    const { completeTodo, uncompleteTodo } = this.props;
+
+    if (!todo.completed) {
+      completeTodo(todo._id);
+    } else {
+      uncompleteTodo(todo._id);
+    }
   }
 }
 

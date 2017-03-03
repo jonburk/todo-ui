@@ -2,6 +2,8 @@ import * as types from '../constants/ActionTypes';
 import _ from 'lodash';
 
 export default function todos(state = [], action) {
+  let newState;
+
   switch (action.type) {
   case types.GET_TODOS:
     return action.payload;
@@ -26,21 +28,20 @@ export default function todos(state = [], action) {
     );
 
   case types.COMPLETE_TODO:
-    const newState = [...state];
+    newState = [...state];
     _.forEach(newState, c => {
-      _.filter(c.tasks, t => t._id === action.id).map(t => t.completed = !t.completed);
+      _.filter(c.tasks, t => t._id === action.id).map(t => t.completed = true);
     });
 
     return newState;
 
-  case types.COMPLETE_ALL:
-    const areAllMarked = state.every(todo => todo.completed);
-    return state.map(todo => Object.assign({}, todo, {
-      completed: !areAllMarked
-    }));
+  case types.UNCOMPLETE_TODO:
+    newState = [...state];
+    _.forEach(newState, c => {
+      _.filter(c.tasks, t => t._id === action.id).map(t => t.completed = false);
+    });
 
-  case types.CLEAR_COMPLETED:
-    return state.filter(todo => todo.completed === false);
+    return newState;
 
   default:
     return state;

@@ -29,13 +29,27 @@ export function editTodo(id, text) {
 }
 
 export function completeTodo(id) {
-  return { type: types.COMPLETE_TODO, id };
+  return (dispatch) => {
+    axios.post(`${API_URL}/tasks/${id}/complete`)
+         .then(response => {
+           dispatch({
+             type: types.COMPLETE_TODO,
+             id
+           })
+         })
+         .catch(error => console.log(error));
+  }
 }
 
-export function completeAll() {
-  return { type: types.COMPLETE_ALL };
-}
-
-export function clearCompleted() {
-  return { type: types.CLEAR_COMPLETED };
+export function uncompleteTodo(id) {
+  return (dispatch) => {
+    axios.delete(`${API_URL}/tasks/${id}/complete`)
+         .then(response => {
+           dispatch({
+             type: types.UNCOMPLETE_TODO,
+             id
+           })
+         })
+         .catch(error => console.log(error));
+  }
 }
