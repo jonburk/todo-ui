@@ -39,8 +39,17 @@ class TodoItem extends Component {
       <ListItem primaryText={todo.name}
                 onTouchTap={() => this.toggleTodo(todo)}
                 leftIcon={todo.completed ? <CheckBoxIcon color={palette.disabledColor} /> : <CheckBoxBlankIcon color={checkBoxColor} />}
+                secondaryText={todo.repeat ? `Every ${this.getRepetitionDescription(todo.repeat)}` : null}
                 rightIconButton={rightIconMenu}/>
     );
+  }
+
+  getRepetitionDescription(repeat) {
+    if (repeat.rate === 1) {
+      return repeat.unit.substring(0, repeat.unit.length - 1);
+    } else {
+      return `${repeat.rate} ${repeat.unit}`;
+    }
   }
 
   toggleTodo(todo) {
