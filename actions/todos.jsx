@@ -56,6 +56,6 @@ export function uncompleteTodo(id) {
 
 export function cleanup() {
   return (dispatch) => {
-    axios.post(`${API_URL}/tasks/cleanup`);    
+    axios.post(`${API_URL}/tasks/cleanup`).catch(error => console.log(error));    
   }
 }
