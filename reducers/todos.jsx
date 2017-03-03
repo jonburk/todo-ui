@@ -4,39 +4,7 @@ import _ from 'lodash';
 export default function todos(state = [], action) {
   switch (action.type) {
   case types.GET_TODOS:
-    return [
-      {
-        _id: "Software",
-        tasks: [
-          {
-            name: 'Use Redux',
-            completed: false,
-            _id: 0,
-            dueDate: '2017-01-01',
-            category: 'Software development' 
-          },
-          {
-            name: 'Use Material UI',
-            completed: false,
-            _id: 1,
-            dueDate: '2017-04-01',
-            category: 'Software development'     
-          }
-        ]
-      },
-      {
-        _id: "Test",
-        tasks: [
-          {
-            name: 'Add more tasks',
-            completed: false,
-            _id: 2,
-            dueDate: '2017-04-01',
-            category: 'Test'     
-          }      
-        ]
-      }
-    ]
+    return action.payload;
 
   case types.ADD_TODO:
     return [{
