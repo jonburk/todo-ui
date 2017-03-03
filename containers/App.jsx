@@ -18,7 +18,7 @@ class App extends Component {
       <div>
         <MuiThemeProvider muiTheme={theme}>
           <div>
-            <Header/>
+            <Header actions={actions}/>
             <MainSection todos={todos} actions={actions}/>
             <Footer/>
           </div>
@@ -28,6 +28,7 @@ class App extends Component {
   }
 
   componentDidMount() {
+    this.props.actions.cleanup();
     this.props.actions.getTodos();
   }
 }
