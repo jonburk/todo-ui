@@ -26,6 +26,10 @@ class App extends Component {
       </div>
     );
   }
+
+  componentDidMount() {
+    this.props.actions.getTodos();
+  }
 }
 
 App.propTypes = {
