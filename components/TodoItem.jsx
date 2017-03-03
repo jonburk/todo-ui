@@ -33,12 +33,13 @@ class TodoItem extends Component {
       </IconMenu>
     );
 
-    const checkBoxColor = (todo.dueDate && moment().isAfter(todo.dueDate)) ? '#cb0044' : palette.accent1Color;
-
-    const secondaryItems = [];
+    const overdueColor = '#cb0044';
+    const overdue = (todo.dueDate && moment().isAfter(todo.dueDate));
+    const checkBoxColor = overdue ? overdueColor : palette.accent1Color;
 
     return (
       <ListItem primaryText={todo.name}
+                style={overdue && !todo.completed ? {color: overdueColor} : null}
                 onTouchTap={() => this.toggleTodo(todo)}
                 leftIcon={todo.completed ? <CheckBoxIcon color={palette.disabledColor} /> : <CheckBoxBlankIcon color={checkBoxColor} />}
                 secondaryText={todo.repeat ? `Repeats every ${this.getRepetitionDescription(todo.repeat)}.` : null}
