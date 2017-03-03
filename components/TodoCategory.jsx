@@ -4,7 +4,7 @@ import { Subheader, Divider } from 'material-ui';
 
 class TodoCategory extends Component {
   render() {
-    const { category, actions } = this.props;
+    const { category, actions, last } = this.props;
 
     return (
       <div>
@@ -12,7 +12,7 @@ class TodoCategory extends Component {
         {category.tasks.map(todo =>
           <TodoItem key={todo._id} todo={todo} {...actions} />
         )}
-        <Divider/>
+        {!last ? <Divider/> : null}
       </div>
     )
   }
@@ -20,7 +20,8 @@ class TodoCategory extends Component {
 
 TodoCategory.propTypes = {
   category: PropTypes.object.isRequired,
-  actions: PropTypes.object.isRequired
+  actions: PropTypes.object.isRequired,
+  last: PropTypes.bool
 };
 
 export default TodoCategory;

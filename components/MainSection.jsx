@@ -16,10 +16,11 @@ class MainSection extends Component {
     return (
       <section className="body">
         <List className="todo-list">
-          {todos.map(category =>
+          {todos.map((category, index) =>
             <TodoCategory category={category} 
                           key={category._id}
-                          actions={actions}/>
+                          actions={actions}
+                          last={index === todos.length - 1}/>
           )}
         </List>
       </section>
