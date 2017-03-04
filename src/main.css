@@ -11,3 +11,12 @@ body {
     overflow-x: hidden;
     height: calc(100vh - 120px);
 }
+
+.empty-list {
+    text-align: center;
+    padding-top: 60px;
+}
+
+.empty-list-message {
+    margin-top: 30px;
+}

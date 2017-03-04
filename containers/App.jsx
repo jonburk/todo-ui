@@ -21,7 +21,7 @@ class App extends Component {
           <div>
             <Header actions={actions}/>
             <MainSection categories={todos.categories} deleteConfirmation={todos.deleteConfirmation} actions={actions}/>
-            <Footer/>
+            {todos.categories.length > 0 ? <Footer/> : null}
           </div>
         </MuiThemeProvider>
       </div>

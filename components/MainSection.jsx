@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import TodoCategory from './TodoCategory';
-import { List, Dialog, FlatButton } from 'material-ui';
+import { List, Dialog, FlatButton, FloatingActionButton } from 'material-ui';
+
+import AddIcon from 'material-ui/svg-icons/content/add';
 
 class MainSection extends Component {
   constructor(props, context) {
@@ -10,16 +12,29 @@ class MainSection extends Component {
   render() {
     const { categories, deleteConfirmation, actions } = this.props;
 
+    const todoList = (
+      <List>
+        {categories.map((category, index) =>
+          <TodoCategory category={category} 
+                        key={category._id}
+                        actions={actions}
+                        last={index === categories.length - 1}/>
+        )}
+      </List>
+    )
+
+    const placeholder = (
+      <div className='empty-list'>
+        <FloatingActionButton secondary={true}>
+          <AddIcon/>
+        </FloatingActionButton>
+        <div className='empty-list-message'>Begin by adding a task</div>
+      </div>
+    )
+
     return (
       <section className="body">
-        <List className="todo-list">
-          {categories.map((category, index) =>
-            <TodoCategory category={category} 
-                          key={category._id}
-                          actions={actions}
-                          last={index === categories.length - 1}/>
-          )}
-        </List>
+        {categories.length > 0 ? todoList : placeholder}
         <Dialog open={deleteConfirmation.open}
                 modal={false}
                 onRequestClose={() => actions.closeDeleteConfirmation()}
