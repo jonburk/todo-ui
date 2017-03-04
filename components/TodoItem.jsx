@@ -10,7 +10,7 @@ import CheckBoxBlankIcon from 'material-ui/svg-icons/toggle/check-box-outline-bl
 import ScheduleIcon from 'material-ui/svg-icons/action/schedule';
 import EditIcon from 'material-ui/svg-icons/image/edit';
 import DeleteIcon from 'material-ui/svg-icons/action/delete';
-
+import DatePicker from 'material-ui/DatePicker';
 
 class TodoItem extends Component {
   render() {
@@ -25,7 +25,8 @@ class TodoItem extends Component {
         }
       >
         <MenuItem primaryText="Reschedule"
-                  leftIcon={<ScheduleIcon/>}/>
+                  leftIcon={<ScheduleIcon/>}
+                  onTouchTap={() => this.refs.reschedule.openDialog()}/>
         <MenuItem primaryText="Edit" 
                   leftIcon={<EditIcon/>}/>
         <MenuItem primaryText="Delete" 
@@ -43,8 +44,20 @@ class TodoItem extends Component {
                 onTouchTap={() => this.toggleTodo(todo)}
                 leftIcon={todo.completed ? <CheckBoxIcon color={palette.disabledColor} /> : <CheckBoxBlankIcon color={checkBoxColor} />}
                 secondaryText={todo.repeat ? `Repeats every ${this.getRepetitionDescription(todo.repeat)}.` : null}
-                rightIconButton={rightIconMenu}/>
+                rightIconButton={rightIconMenu}>
+        <DatePicker name='reschedule' 
+                    ref='reschedule' 
+                    style={{display: 'none'}}
+                    autoOk={true}
+                    defaultDate={moment(todo.dueDate).toDate()}
+                    onChange={(event, date) => this.reschedule(todo, date)}/>
+      </ListItem>
     );
+  }
+
+  reschedule(todo, date) {
+    todo.dueDate = moment(date).format('YYYY-MM-DD');
+    this.props.editTodo(todo);
   }
 
   getRepetitionDescription(repeat) {

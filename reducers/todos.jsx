@@ -22,8 +22,8 @@ export default function todos(state = [], action) {
 
   case types.EDIT_TODO:
     return state.map(todo =>
-      todo._id === action.id ?
-        Object.assign({}, todo, { name: action.text }) :
+      todo._id === action.todo.id ?
+        Object.assign({}, todo, action.todo) :
         todo
     );
 
