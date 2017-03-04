@@ -38,12 +38,23 @@ class TodoItem extends Component {
     const overdue = (todo.dueDate && moment().isAfter(todo.dueDate));
     const checkBoxColor = overdue ? overdueColor : palette.accent1Color;
 
+    const repeatText = todo.repeat ? (
+      <div>{`Repeats every ${this.getRepetitionDescription(todo.repeat)}.`}</div>
+    ) : null;
+
+    const dueText = todo.dueDate ? (
+      <div style={overdue && !todo.completed ? {color: overdueColor} : null}>
+        {`Due ${moment(todo.dueDate).format('ddd MMMM Do')}`}
+      </div>
+    ) : null;
+
     return (
       <ListItem primaryText={todo.name}
                 style={overdue && !todo.completed ? {color: overdueColor} : null}
                 onTouchTap={() => this.toggleTodo(todo)}
                 leftIcon={todo.completed ? <CheckBoxIcon color={palette.disabledColor} /> : <CheckBoxBlankIcon color={checkBoxColor} />}
-                secondaryText={todo.repeat ? `Repeats every ${this.getRepetitionDescription(todo.repeat)}.` : null}
+                secondaryText={<div>{dueText}{repeatText}</div>}
+                secondaryTextLines={2}
                 rightIconButton={rightIconMenu}>
         <DatePicker name='reschedule' 
                     ref='reschedule' 
