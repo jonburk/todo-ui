@@ -75,3 +75,11 @@ export function cleanup() {
     axios.post(`${API_URL}/tasks/cleanup`).catch(error => console.log(error));    
   }
 }
+
+export function openDeleteConfirmation(todo) {
+  return { type: types.OPEN_DELETE_CONFIRMATION, todo };
+}
+
+export function closeDeleteConfirmation() {
+  return { type: types.CLOSE_DELETE_CONFIRMATION };
+}

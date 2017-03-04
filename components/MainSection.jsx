@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import TodoCategory from './TodoCategory';
-import { List } from 'material-ui';
+import { List, Dialog, FlatButton } from 'material-ui';
 
 class MainSection extends Component {
   constructor(props, context) {
@@ -8,7 +8,7 @@ class MainSection extends Component {
   }
 
   render() {
-    const { categories, actions } = this.props;
+    const { categories, deleteConfirmation, actions } = this.props;
 
     return (
       <section className="body">
@@ -20,6 +20,15 @@ class MainSection extends Component {
                           last={index === categories.length - 1}/>
           )}
         </List>
+        <Dialog open={deleteConfirmation.open}
+                modal={false}
+                onRequestClose={() => actions.closeDeleteConfirmation()}
+                actions={[
+                  <FlatButton label='Cancel' primary={false} onTouchTap={() => actions.closeDeleteConfirmation()}/>,
+                  <FlatButton label='Delete' primary={true} onTouchTap={() => actions.deleteTodo(deleteConfirmation.todo._id)}/>
+                ]}>
+          Delete "{_.get(deleteConfirmation, 'todo.name', '')}"?
+        </Dialog>
       </section>
     );
   }
@@ -27,6 +36,7 @@ class MainSection extends Component {
 
 MainSection.propTypes = {
   categories: PropTypes.array.isRequired,
+  deleteConfirmation: PropTypes.object.isRequired,
   actions: PropTypes.object.isRequired
 };
 

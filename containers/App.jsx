@@ -20,7 +20,7 @@ class App extends Component {
         <MuiThemeProvider muiTheme={theme}>
           <div>
             <Header actions={actions}/>
-            <MainSection categories={todos.categories} actions={actions}/>
+            <MainSection categories={todos.categories} deleteConfirmation={todos.deleteConfirmation} actions={actions}/>
             <Footer/>
           </div>
         </MuiThemeProvider>

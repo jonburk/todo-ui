@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { ListItem, IconButton, IconMenu, MenuItem } from 'material-ui';
+import { ListItem, IconButton, IconMenu, MenuItem, FlatButton, DatePicker } from 'material-ui';
 import muiThemeable from 'material-ui/styles/muiThemeable';
 import moment from 'moment';
 
@@ -9,11 +9,10 @@ import CheckBoxBlankIcon from 'material-ui/svg-icons/toggle/check-box-outline-bl
 import ScheduleIcon from 'material-ui/svg-icons/action/schedule';
 import EditIcon from 'material-ui/svg-icons/image/edit';
 import DeleteIcon from 'material-ui/svg-icons/action/delete';
-import DatePicker from 'material-ui/DatePicker';
 
 class TodoItem extends Component {
   render() {
-    const { todo, deleteTodo } = this.props;
+    const { todo, openDeleteConfirmation } = this.props;
     const { palette } = this.props.muiTheme;
 
     const rightIconMenu = (
@@ -30,7 +29,7 @@ class TodoItem extends Component {
                   leftIcon={<EditIcon/>}/>
         <MenuItem primaryText="Delete" 
                   leftIcon={<DeleteIcon/>}
-                  onTouchTap={() => deleteTodo(todo._id)}/>
+                  onTouchTap={() => openDeleteConfirmation(todo)}/>
       </IconMenu>
     );
 
@@ -92,7 +91,7 @@ class TodoItem extends Component {
 
 TodoItem.propTypes = {
   todo: PropTypes.object.isRequired,
-  completeTodo: PropTypes.func.isRequired
+  openDeleteConfirmation: PropTypes.func.isRequired
 };
 
 export default muiThemeable()(TodoItem);
