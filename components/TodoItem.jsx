@@ -14,7 +14,7 @@ import DatePicker from 'material-ui/DatePicker';
 
 class TodoItem extends Component {
   render() {
-    const { todo } = this.props;
+    const { todo, deleteTodo } = this.props;
     const { palette } = this.props.muiTheme;
 
     const rightIconMenu = (
@@ -30,7 +30,8 @@ class TodoItem extends Component {
         <MenuItem primaryText="Edit" 
                   leftIcon={<EditIcon/>}/>
         <MenuItem primaryText="Delete" 
-                  leftIcon={<DeleteIcon/>}/>
+                  leftIcon={<DeleteIcon/>}
+                  onTouchTap={() => deleteTodo(todo._id)}/>
       </IconMenu>
     );
 

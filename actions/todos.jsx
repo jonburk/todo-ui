@@ -21,7 +21,15 @@ export function addTodo(text) {
 }
 
 export function deleteTodo(id) {
-  return { type: types.DELETE_TODO, id };
+  return (dispatch) => {
+    axios.delete(`${API_URL}/tasks/${id}`)
+         .then(response => {
+           dispatch({
+             type: types.DELETE_TODO, 
+             id 
+            })
+         })
+  }
 }
 
 export function editTodo(todo) {

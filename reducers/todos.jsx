@@ -16,9 +16,12 @@ export default function todos(state = [], action) {
     }, ...state];
 
   case types.DELETE_TODO:
-    return state.filter(todo =>
-      todo._id !== action.id
-    );
+    newState = [...state];
+    _.forEach(newState, c => {
+      _.remove(c.tasks, t => t._id === action.id);
+    });
+
+    return newState.filter(c => c.tasks.length > 0);
 
   case types.EDIT_TODO:
     return state.map(todo =>
