@@ -14,12 +14,13 @@ import theme from '../src/material_ui_raw_theme_file'
 class App extends Component {
   render() {
     const { todos, actions } = this.props;
+    
     return (
       <div>
         <MuiThemeProvider muiTheme={theme}>
           <div>
             <Header actions={actions}/>
-            <MainSection todos={todos} actions={actions}/>
+            <MainSection categories={todos.categories} actions={actions}/>
             <Footer/>
           </div>
         </MuiThemeProvider>
@@ -34,7 +35,7 @@ class App extends Component {
 }
 
 App.propTypes = {
-  todos: PropTypes.array.isRequired,
+  todos: PropTypes.object.isRequired,
   actions: PropTypes.object.isRequired
 };
 

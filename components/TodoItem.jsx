@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import classnames from 'classnames';
 import { ListItem, IconButton, IconMenu, MenuItem } from 'material-ui';
 import muiThemeable from 'material-ui/styles/muiThemeable';
 import moment from 'moment';
@@ -36,7 +35,7 @@ class TodoItem extends Component {
     );
 
     const overdueColor = '#cb0044';
-    const overdue = (todo.dueDate && moment().isAfter(todo.dueDate));
+    const overdue = (todo.dueDate && moment().startOf('day').add(1, 'days').isAfter(todo.dueDate));
     const checkBoxColor = overdue ? overdueColor : palette.accent1Color;
 
     const repeatText = todo.repeat ? (
@@ -61,7 +60,7 @@ class TodoItem extends Component {
                     ref='reschedule' 
                     style={{display: 'none'}}
                     autoOk={true}
-                    defaultDate={moment(todo.dueDate).toDate()}
+                    defaultDate={todo.dueDate ? moment(todo.dueDate).toDate() : moment().toDate()}
                     onChange={(event, date) => this.reschedule(todo, date)}/>
       </ListItem>
     );

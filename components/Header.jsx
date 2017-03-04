@@ -1,5 +1,4 @@
 import React, { PropTypes, Component } from 'react';
-import TodoTextInput from './TodoTextInput';
 import IconButton from 'material-ui/IconButton';
 import RefreshIcon from 'material-ui/svg-icons/navigation/refresh';
 
