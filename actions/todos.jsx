@@ -13,7 +13,7 @@ export function getTodos() {
              payload: response.data
            })
          })
-         .catch(error => console.log(error));
+         .catch(() => dispatch(setError('Unable to load tasks.')));
   }
 }
 
@@ -31,6 +31,7 @@ export function deleteTodo(id) {
              id 
             })
          })
+         .catch(() => dispatch(setError('Unable to delete task.')));
   }
 }
 
@@ -43,6 +44,7 @@ export function editTodo(todo) {
              todo
             })
          })
+         .catch(() => dispatch(setError('Unable to update task.')));
   }
 }
 
@@ -55,7 +57,7 @@ export function completeTodo(id) {
              id
            })
          })
-         .catch(error => console.log(error));
+         .catch(() => dispatch(setError('Unable to complete task.')));
   }
 }
 
@@ -68,14 +70,14 @@ export function uncompleteTodo(id) {
              id
            })
          })
-         .catch(error => console.log(error));
+         .catch(() => dispatch(setError('Unable to un-complete task.')));
   }
 }
 
 export function cleanup() {
   return (dispatch) => {
     axios.post(`${API_URL}/tasks/cleanup`, null, {validateStatus: status => status < 400})
-         .catch(error => console.log(error));    
+         .catch(error => console.error(error));    
   }
 }
 
@@ -89,4 +91,9 @@ export function closeDeleteConfirmation() {
 
 export function setBusy(busy) {
   return { type: types.SET_BUSY, busy };
+}
+
+export function setError(error) {
+  console.error(error);
+  return { type: types.SET_ERROR, error };
 }

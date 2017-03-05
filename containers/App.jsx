@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from "react";
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import RefreshIndicator from 'material-ui/RefreshIndicator';
+import { RefreshIndicator, Snackbar } from 'material-ui';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import MainSection from '../components/MainSection';
@@ -35,6 +35,10 @@ class App extends Component {
             {todos.busy ? refreshIndicator : mainSection}
             </section>
             <Footer disabled={todos.busy || todos.categories.length === 0}/>
+            <Snackbar open={!!todos.error} 
+                      message={todos.error || ''} 
+                      autoHideDuration={3000}
+                      onRequestClose={() => actions.setError(null)}/>
           </div>
         </MuiThemeProvider>
       </div>

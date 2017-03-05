@@ -61,6 +61,10 @@ export default function todos(state = initialState, action) {
 
   case types.SET_BUSY:
     newState.busy = action.busy;
+    break;    
+
+  case types.SET_ERROR:
+    newState.error = action.error;
     break;
   }
 
