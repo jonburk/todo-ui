@@ -19,7 +19,7 @@ class App extends Component {
       <div>
         <MuiThemeProvider muiTheme={theme}>
           <div>
-            <Header actions={actions} busy={todos.busy}/>
+            <Header actions={actions} busy={todos.busy} router={router}/>
             <section className="body">
               {this.props.children}            
             </section>

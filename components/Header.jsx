@@ -8,10 +8,11 @@ class Header extends Component {
   render() {
     const { getTodos } = this.props.actions;
     const { busy } = this.props;
+    const { pathname } = this.props.router.location;
 
     const refreshButton = (
       <IconButton title="Refresh" 
-                  onTouchTap={() => getTodos()}
+                  onTouchTap={() => getTodos(pathname === 'all')}
                   disabled={busy}>
         <RefreshIcon/>
       </IconButton>
@@ -29,7 +30,8 @@ class Header extends Component {
 
 Header.propTypes = {
   actions: PropTypes.object.isRequired,
-  busy: PropTypes.bool.isRequired
+  busy: PropTypes.bool.isRequired,
+  router: PropTypes.object.isRequired
 };
 
 export default Header;
