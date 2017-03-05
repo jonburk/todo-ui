@@ -6,16 +6,11 @@ import BusyIndicator from './BusyIndicator';
 import { List, Dialog, FlatButton, FloatingActionButton } from 'material-ui';
 import * as TodoActions from '../actions/todos';
 import muiThemeable from 'material-ui/styles/muiThemeable';
-import { browserHistory } from 'react-router';
 
 import CheckCircleIcon from 'material-ui/svg-icons/action/check-circle';
 import AddIcon from 'material-ui/svg-icons/content/add';
 
 class TodoList extends Component {
-  constructor(props, context) {
-    super(props, context);
-  }
-
   render() {
     const { actions, all } = this.props;
     const { categories, deleteConfirmation, busy } = this.props.todos;
@@ -41,7 +36,7 @@ class TodoList extends Component {
 
     const allPlaceholder = (
       <div className='empty-list'>
-        <FloatingActionButton secondary={true} onTouchTap={() => browserHistory.push('add')}>
+        <FloatingActionButton secondary={true} onTouchTap={() => actions.push('add')}>
           <AddIcon/>
         </FloatingActionButton>
         <div className='empty-list-message'>Begin by adding a task&hellip;</div>

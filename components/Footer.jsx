@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
 import { Paper, BottomNavigation, BottomNavigationItem } from 'material-ui';
-import { browserHistory } from 'react-router';
 
 import TodayIcon from 'material-ui/svg-icons/action/today';
 import ListIcon from 'material-ui/svg-icons/action/list';
@@ -24,26 +23,26 @@ class Footer extends Component {
   }
 
   getNavigationItems() {
-    const { disabled } = this.props;
+    const { disabled, actions } = this.props;
     const items = []
 
     if (!disabled) {
       items.push(
         <BottomNavigationItem key='today'
                               label='Due Today'
-                              onTouchTap={() => browserHistory.push('/')}
+                              onTouchTap={() => actions.push('/')}
                               icon={<TodayIcon/>}/>
       );
       items.push(
         <BottomNavigationItem key='all' 
                               label='All' 
-                              onTouchTap={() => browserHistory.push('all')}
+                              onTouchTap={() => actions.push('all')}
                               icon={<ListIcon/>}/>
       );
       items.push(
         <BottomNavigationItem key='add' 
                               label='Add Task' 
-                              onTouchTap={() => browserHistory.push('add')}
+                              onTouchTap={() => actions.push('add')}
                               icon={<AddIcon/>}/>
       );
     } 
@@ -53,6 +52,7 @@ class Footer extends Component {
 }
 
 Footer.propTypes = {
+  actions: PropTypes.object.isRequired,
   disabled: PropTypes.bool.isRequired,
   router: PropTypes.object.isRequired
 };

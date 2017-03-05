@@ -23,7 +23,7 @@ class App extends Component {
             <section className="body">
               {this.props.children}            
             </section>
-            <Footer disabled={todos.busy} router={router}/>
+            <Footer disabled={todos.busy} router={router} actions={actions}/>
             <Snackbar open={!!todos.error} 
                       message={todos.error || ''} 
                       autoHideDuration={3000}

@@ -2,8 +2,15 @@ import axios from 'axios';
 import * as types from '../constants/ActionTypes';
 import moment from 'moment';
 import qs from 'qs';
+import { push as navigate } from 'react-router-redux';
 
 const API_URL = 'http://localhost:8080/api';
+
+export function push(destination) {
+  return (dispatch) => {
+    dispatch(navigate(destination));
+  }
+}
 
 export function getTodos(all) {
   return (dispatch) => {
