@@ -2,8 +2,11 @@ import React from "react";
 import ReactDOM from "react-dom";
 import injectTapEventPlugin from "react-tap-event-plugin";
 import { Provider } from 'react-redux';
+import { Router, Route, IndexRoute, browserHistory } from 'react-router';
+import { syncHistoryWithStore } from 'react-router-redux';
 
 import App from '../containers/App';
+import TodoList from '../components/TodoList';
 import configureStore from '../store/configureStore';
 
 //Needed for React Developer Tools
@@ -16,10 +19,17 @@ window.React = React;
 injectTapEventPlugin();
 
 const store = configureStore();
+const history = syncHistoryWithStore(browserHistory, store);
 
-ReactDOM.render(
+ReactDOM.render(  
   <Provider store={store}>
-    <App />
+    <Router history={history}>
+      <Route path='/' component={App}>
+        <IndexRoute component={TodoList}/>
+        <Route path='/all' component={() => <TodoList all={true}/>}/>
+        <Route path='/add' component={() => <div>Add a task</div>}/>
+      </Route>
+    </Router>
   </Provider>,
   document.getElementById("root")
 );

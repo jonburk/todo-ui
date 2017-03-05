@@ -1,16 +1,21 @@
 import React, { Component, PropTypes } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import TodoCategory from './TodoCategory';
+import BusyIndicator from './BusyIndicator';
 import { List, Dialog, FlatButton, FloatingActionButton } from 'material-ui';
+import * as TodoActions from '../actions/todos';
 
 import AddIcon from 'material-ui/svg-icons/content/add';
 
-class MainSection extends Component {
+class TodoList extends Component {
   constructor(props, context) {
     super(props, context);
   }
 
   render() {
-    const { categories, deleteConfirmation, actions } = this.props;
+    const { actions, all } = this.props;
+    const { categories, deleteConfirmation, busy } = this.props.todos;
 
     const todoList = (
       <List>
@@ -32,9 +37,20 @@ class MainSection extends Component {
       </div>
     )
 
+    const busyIndicator = <BusyIndicator/>
+
+    let component;
+    if (busy) {
+      component = busyIndicator;
+    } else if (categories.length === 0) {
+      component = placeholder;
+    } else {
+      component = todoList;
+    }
+
     return (
       <div>
-        {categories.length > 0 ? todoList : placeholder}
+        {component}
         <Dialog open={deleteConfirmation.open}
                 modal={false}
                 onRequestClose={() => actions.closeDeleteConfirmation()}
@@ -47,12 +63,25 @@ class MainSection extends Component {
       </div>
     );
   }
+
+  componentDidMount() {
+    this.props.actions.getTodos(this.props.all);
+  }
 }
 
-MainSection.propTypes = {
-  categories: PropTypes.array.isRequired,
-  deleteConfirmation: PropTypes.object.isRequired,
-  actions: PropTypes.object.isRequired
-};
+function mapStateToProps(state) {
+  return {
+    todos: state.todos
+  };
+}
 
-export default MainSection;
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(TodoActions, dispatch)
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(TodoList);

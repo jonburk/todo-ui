@@ -1,12 +1,20 @@
 import axios from 'axios';
 import * as types from '../constants/ActionTypes';
+import moment from 'moment';
+import qs from 'qs';
 
 const API_URL = 'http://localhost:8080/api';
 
-export function getTodos() {
+export function getTodos(all) {
   return (dispatch) => {
     dispatch(setBusy(true));
-    axios.get(`${API_URL}/tasks`)
+
+    const params = {}
+    if (!all) {
+      params.dueDate = moment().format('YYYY-MM-DD');
+    }
+    
+    axios.get(`${API_URL}/tasks?${qs.stringify(params)}`)
          .then(response => {
            dispatch({
              type: types.GET_TODOS,
