@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from "react";
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import RefreshIndicator from 'material-ui/RefreshIndicator';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import MainSection from '../components/MainSection';
@@ -15,13 +16,25 @@ class App extends Component {
   render() {
     const { todos, actions } = this.props;
     
+    const mainSection = <MainSection categories={todos.categories} 
+                                     deleteConfirmation={todos.deleteConfirmation} 
+                                     actions={actions}/>
+
+    const refreshIndicator = <RefreshIndicator top={0} 
+                                              left={-60} 
+                                              size={120}
+                                              style={{marginLeft: '50%', marginTop: 'calc(50vh - 60px)'}}
+                                              status='loading'/>
+
     return (
       <div>
         <MuiThemeProvider muiTheme={theme}>
           <div>
-            <Header actions={actions}/>
-            <MainSection categories={todos.categories} deleteConfirmation={todos.deleteConfirmation} actions={actions}/>
-            {todos.categories.length > 0 ? <Footer/> : null}
+            <Header actions={actions} busy={todos.busy}/>
+            <section className="body">
+            {todos.busy ? refreshIndicator : mainSection}
+            </section>
+            <Footer disabled={todos.busy || todos.categories.length === 0}/>
           </div>
         </MuiThemeProvider>
       </div>

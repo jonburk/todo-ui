@@ -7,10 +7,12 @@ import AppBar from 'material-ui/AppBar';
 class Header extends Component {
   render() {
     const { getTodos } = this.props.actions;
+    const { busy } = this.props;
 
     const refreshButton = (
       <IconButton title="Refresh" 
-                  onTouchTap={() => getTodos()}>
+                  onTouchTap={() => getTodos()}
+                  disabled={busy}>
         <RefreshIcon/>
       </IconButton>
     )
@@ -26,7 +28,8 @@ class Header extends Component {
 }
 
 Header.propTypes = {
-  actions: PropTypes.object.isRequired
+  actions: PropTypes.object.isRequired,
+  busy: PropTypes.bool.isRequired
 };
 
 export default Header;

@@ -5,11 +5,12 @@ const initialState = {
   categories: [],
   deleteConfirmation: {
     open: false
-  }
+  },
+  busy: true
 }
 
 export default function todos(state = initialState, action) {
-  const newState = {...state};
+  const newState = {...state, busy: false};
 
   switch (action.type) {
   case types.GET_TODOS:
@@ -56,6 +57,10 @@ export default function todos(state = initialState, action) {
 
   case types.CLOSE_DELETE_CONFIRMATION:
     newState.deleteConfirmation.open = false;
+    break;
+
+  case types.SET_BUSY:
+    newState.busy = action.busy;
     break;
   }
 

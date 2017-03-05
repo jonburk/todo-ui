@@ -33,7 +33,7 @@ class MainSection extends Component {
     )
 
     return (
-      <section className="body">
+      <div>
         {categories.length > 0 ? todoList : placeholder}
         <Dialog open={deleteConfirmation.open}
                 modal={false}
@@ -44,7 +44,7 @@ class MainSection extends Component {
                 ]}>
           Delete "{_.get(deleteConfirmation, 'todo.name', '')}"?
         </Dialog>
-      </section>
+      </div>
     );
   }
 }

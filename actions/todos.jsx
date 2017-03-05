@@ -5,6 +5,7 @@ const API_URL = 'http://localhost:8080/api';
 
 export function getTodos() {
   return (dispatch) => {
+    dispatch(setBusy(true));
     axios.get(`${API_URL}/tasks`)
          .then(response => {
            dispatch({
@@ -17,6 +18,7 @@ export function getTodos() {
 }
 
 export function addTodo(text) {
+  setBusy(true);
   return { type: types.ADD_TODO, text };
 }
 
@@ -83,4 +85,8 @@ export function openDeleteConfirmation(todo) {
 
 export function closeDeleteConfirmation() {
   return { type: types.CLOSE_DELETE_CONFIRMATION };
+}
+
+export function setBusy(busy) {
+  return { type: types.SET_BUSY, busy };
 }
