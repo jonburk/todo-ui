@@ -5,7 +5,10 @@ import TodoCategory from './TodoCategory';
 import BusyIndicator from './BusyIndicator';
 import { List, Dialog, FlatButton, FloatingActionButton } from 'material-ui';
 import * as TodoActions from '../actions/todos';
+import muiThemeable from 'material-ui/styles/muiThemeable';
+import { browserHistory } from 'react-router';
 
+import CheckCircleIcon from 'material-ui/svg-icons/action/check-circle';
 import AddIcon from 'material-ui/svg-icons/content/add';
 
 class TodoList extends Component {
@@ -16,6 +19,7 @@ class TodoList extends Component {
   render() {
     const { actions, all } = this.props;
     const { categories, deleteConfirmation, busy } = this.props.todos;
+    const { palette } = this.props.muiTheme;
 
     const todoList = (
       <List>
@@ -28,14 +32,23 @@ class TodoList extends Component {
       </List>
     )
 
-    const placeholder = (
+    const todayPlaceholder = (
       <div className='empty-list'>
-        <FloatingActionButton secondary={true}>
-          <AddIcon/>
-        </FloatingActionButton>
-        <div className='empty-list-message'>Begin by adding a task</div>
+        <CheckCircleIcon style={{width: '60px', height: '60px'}} color={palette.accent2Color}/>
+        <div className='empty-list-message'>Nothing left to do today!</div>
       </div>
     )
+
+    const allPlaceholder = (
+      <div className='empty-list'>
+        <FloatingActionButton secondary={true} onTouchTap={() => browserHistory.push('add')}>
+          <AddIcon/>
+        </FloatingActionButton>
+        <div className='empty-list-message'>Begin by adding a task&hellip;</div>
+      </div>
+    )    
+
+    const placeholder = all ? allPlaceholder : todayPlaceholder;
 
     const busyIndicator = <BusyIndicator/>
 
@@ -84,4 +97,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(TodoList);
+)(muiThemeable()(TodoList));
