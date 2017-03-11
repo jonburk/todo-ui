@@ -12,6 +12,19 @@ export function push(destination) {
   }
 }
 
+export function getCategoryNames() {
+  return (dispatch) => {
+    axios.get(`${API_URL}/tasks/categories`)
+         .then(response => {
+           dispatch({
+             type: types.GET_CATEGORY_NAMES,
+             payload: response.data
+           })
+         })
+         .catch((error) => dispatch(setError('Unable to load categories.', error)));
+  }
+}
+
 export function getTodos(all) {
   return (dispatch) => {
     dispatch(setBusy(true));
@@ -28,13 +41,33 @@ export function getTodos(all) {
              payload: response.data
            })
          })
-         .catch(() => dispatch(setError('Unable to load tasks.')));
+         .catch((error) => dispatch(setError('Unable to load tasks.', error)));
   }
 }
 
-export function addTodo(text) {
-  setBusy(true);
-  return { type: types.ADD_TODO, text };
+export function addTodo(task) {
+  return (dispatch) => {
+    dispatch(setBusy(true));
+
+    if (task.dueDate) {
+      task.dueDate = moment(task.dueDate).startOf('day').format('YYYY-MM-DD');
+    }    
+
+    if (_.get(task, 'repeat.rate')) {
+      task.repeat.rate = parseInt(task.repeat.rate);
+    }    
+
+    axios.post(`${API_URL}/tasks`, task)
+         .then(response => {
+           dispatch({ 
+             type: types.ADD_TODO, 
+             task 
+           });
+
+           dispatch(push('/'));
+         })
+         .catch((error) => dispatch(setError('Unable to create new task.', error)))
+  }
 }
 
 export function deleteTodo(id) {
@@ -46,7 +79,7 @@ export function deleteTodo(id) {
              id 
             })
          })
-         .catch(() => dispatch(setError('Unable to delete task.')));
+         .catch((error) => dispatch(setError('Unable to delete task.', error)));
   }
 }
 
@@ -59,7 +92,7 @@ export function editTodo(todo) {
              todo
             })
          })
-         .catch(() => dispatch(setError('Unable to update task.')));
+         .catch((error) => dispatch(setError('Unable to update task.', error)));
   }
 }
 
@@ -72,7 +105,7 @@ export function completeTodo(id) {
              id
            })
          })
-         .catch(() => dispatch(setError('Unable to complete task.')));
+         .catch((error) => dispatch(setError('Unable to complete task.', error)));
   }
 }
 
@@ -85,7 +118,7 @@ export function uncompleteTodo(id) {
              id
            })
          })
-         .catch(() => dispatch(setError('Unable to un-complete task.')));
+         .catch((error) => dispatch(setError('Unable to un-complete task.', error)));
   }
 }
 
@@ -108,7 +141,8 @@ export function setBusy(busy) {
   return { type: types.SET_BUSY, busy };
 }
 
-export function setError(error) {
+export function setError(message, error) {
+  console.error(message);
   console.error(error);
-  return { type: types.SET_ERROR, error };
+  return { type: types.SET_ERROR, error: message };
 }

@@ -10,3 +10,4 @@ export const CLOSE_DELETE_CONFIRMATION = 'CLOSE_DELETE_CONFIRMATION';
 export const SET_BUSY = 'SET_BUSY';
 export const SET_ERROR = 'SET_ERROR';
 export const PUSH = 'PUSH';
+export const GET_CATEGORY_NAMES = 'GET_CATEGORY_NAMES';

@@ -22,7 +22,8 @@ class Header extends Component {
       <header className="header">
           <AppBar title="Todo"                  
                   showMenuIconButton={false}
-                  iconElementRight={refreshButton} />          
+                  zDepth={2}
+                  iconElementRight={pathname !== 'add' ? refreshButton : null} />
       </header>
     );
   }

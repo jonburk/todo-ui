@@ -7,6 +7,7 @@ import { syncHistoryWithStore } from 'react-router-redux';
 
 import App from '../containers/App';
 import TodoList from '../components/TodoList';
+import AddEditTask from '../components/AddEditTask';
 import configureStore from '../store/configureStore';
 
 //Needed for React Developer Tools
@@ -27,7 +28,7 @@ ReactDOM.render(
       <Route path='/' component={App}>
         <IndexRoute component={TodoList}/>
         <Route path='/all' component={() => <TodoList all={true}/>}/>
-        <Route path='/add' component={() => <div>Add a task</div>}/>
+        <Route path='/add' component={AddEditTask}/>
       </Route>
     </Router>
   </Provider>,

@@ -13,7 +13,7 @@ class Footer extends Component {
 
     return (
       <footer className="footer">        
-        <Paper zDepth={3}>
+        <Paper zDepth={2}>
           <BottomNavigation selectedIndex={paths.indexOf(pathname)} style={{backgroundColor: '#EDE9E1'}}>
             {this.getNavigationItems()}
           </BottomNavigation>
