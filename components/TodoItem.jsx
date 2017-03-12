@@ -68,7 +68,7 @@ class TodoItem extends Component {
 
   reschedule(todo, date) {
     todo.dueDate = moment(date).format('YYYY-MM-DD');
-    this.props.editTodo(todo);
+    this.props.rescheduleTodo(todo);
   }
 
   getRepetitionDescription(repeat) {

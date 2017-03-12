@@ -96,7 +96,15 @@ export function deleteTodo(id) {
   }
 }
 
+export function rescheduleTodo(task) {
+  return updateTodo(task, true);
+}
+
 export function editTodo(task) {
+  return updateTodo(task, false);
+}
+
+function updateTodo(task, isReschedule) {
   return (dispatch) => {
     dispatch(setBusy(true));
 
@@ -109,7 +117,9 @@ export function editTodo(task) {
              task 
            });
 
-           dispatch(push('/'));
+           if (!isReschedule) {
+             dispatch(push('/'));
+           }
          })
          .catch((error) => dispatch(setError('Unable to update task.', error)))
   }
