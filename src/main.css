@@ -1,12 +1,12 @@
 html {
     font-family: 'Roboto', sans-serif;
-    position: relative;  
 }
 
 .body {
     margin-top: 60px;
     margin-bottom: 60px;
     height: 100%;
+    width: 100%;
 }
 
 .header {

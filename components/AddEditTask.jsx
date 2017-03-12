@@ -40,7 +40,9 @@ class AddEditTask extends Component {
     const save = add ? addTodo : editTodo;
 
     const style = {
-      padding: '0 16px'
+      padding: '0 16px',
+      position: 'absolute',
+      marginBottom: '60px'
     }
 
     return (
