@@ -33,7 +33,7 @@ const validate = values => {
 class AddEditTask extends Component {
   render() {
     const { handleSubmit, change, dispatch, submitting, add } = this.props;
-    const { addTodo, editTodo } = this.props.actions;
+    const { addTodo, editTodo, push } = this.props.actions;
     const { categoryNames, busy } = this.props.todos;
     const { palette } = this.props.muiTheme;
 
@@ -115,6 +115,11 @@ class AddEditTask extends Component {
                         type='button'
                         disabled={submitting || busy}
                         onTouchTap={handleSubmit(save)}/>
+          <RaisedButton label='Cancel'
+                        style={{margin: '16px', float: 'right'}}
+                        type='button'
+                        disabled={submitting || busy}
+                        onTouchTap={() => push('/all')}/>                        
         </div>
       </form>
     )
