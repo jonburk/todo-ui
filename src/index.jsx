@@ -4,6 +4,7 @@ import injectTapEventPlugin from "react-tap-event-plugin";
 import { Provider } from 'react-redux';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
+import './favicon.ico';
 
 import App from '../containers/App';
 import TodoList from '../components/TodoList';

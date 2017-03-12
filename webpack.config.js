@@ -40,6 +40,14 @@ module.exports = {
         exclude: /node_modules/
       },
       { test: /\.html$/, loader: "file-loader?name=[name].[ext]" },
-      { test: /\.css$/, loader: "file-loader?name=[name].[ext]" }]
+      { test: /\.css$/, loader: "file-loader?name=[name].[ext]" },
+      {
+        test: /favicon\.ico$/,
+        loader: 'url-loader',
+        query: { 
+          limit: 1,
+          name: '[name].[ext]',
+        },
+      }]
   }
 };
