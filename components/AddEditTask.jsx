@@ -17,6 +17,16 @@ const validate = values => {
     errors.name = 'Required';
   }
 
+  if (values.repeat) {
+    if (values.repeat.unit && !values.repeat.rate) {
+      errors.repeat = {};
+      errors.repeat.rate = 'Required';
+    } else if (values.repeat.rate && !values.repeat.unit) {
+      errors.repeat = {};
+      errors.repeat.unit = 'Required';
+    }
+  }
+
   return errors;
 };
 
@@ -73,13 +83,13 @@ class AddEditTask extends Component {
             <CardHeader title='Repeat this task'
                         actAsExpander={true}
                         showExpandableButton={true}
-                        closeIcon={<CheckboxOutlineIcon color={palette.secondaryTextColor} 
-                                                        onTouchTap={() => {
-                                                            change('repeat.rate', null);
-                                                            change('repeat.unit', null);
-                                                          }
-                                                        }/>}
-                        openIcon={<CheckboxIcon color={palette.secondaryTextColor}/>}/>
+                        closeIcon={<CheckboxOutlineIcon color={palette.secondaryTextColor}/>}
+                        openIcon={<CheckboxIcon color={palette.secondaryTextColor}
+                                                onTouchTap={() => {
+                                                  change('repeat.rate', null);
+                                                  change('repeat.unit', null);
+                                                  }
+                                                }/>}/>
             <CardText expandable={true}>
               <Field component={TextField} 
                      type='number'

@@ -68,13 +68,7 @@ export function addTodo(task) {
   return (dispatch) => {
     dispatch(setBusy(true));
 
-    if (task.dueDate) {
-      task.dueDate = moment(task.dueDate).startOf('day').format('YYYY-MM-DD');
-    }    
-
-    if (_.get(task, 'repeat.rate')) {
-      task.repeat.rate = parseInt(task.repeat.rate);
-    }    
+    prepareTask(task);    
 
     axios.post(`${API_URL}/tasks`, task)
          .then(response => {
@@ -106,15 +100,7 @@ export function editTodo(task) {
   return (dispatch) => {
     dispatch(setBusy(true));
 
-    if (task.dueDate) {
-      task.dueDate = moment(task.dueDate).startOf('day').format('YYYY-MM-DD');
-    } else {
-      delete task.dueDate;
-    }
-
-    if (_.get(task, 'repeat.rate')) {
-      task.repeat.rate = parseInt(task.repeat.rate);
-    }
+    prepareTask(task);
 
     axios.put(`${API_URL}/tasks/${task._id}`, task)
          .then(response => {
@@ -178,4 +164,20 @@ export function setError(message, error) {
   console.error(message);
   console.error(error);
   return { type: types.SET_ERROR, error: message };
+}
+
+function prepareTask(task) {
+    if (task.dueDate) {
+      task.dueDate = moment(task.dueDate).startOf('day').format('YYYY-MM-DD');
+    } else {
+      delete task.dueDate;
+    }
+
+    if (task.repeat) {
+      if (!task.repeat.rate || !task.repeat.unit) {
+        delete task.repeat;
+      } else {
+        task.repeat.rate = parseInt(task.repeat.rate);
+      }
+    }
 }
