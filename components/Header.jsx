@@ -12,7 +12,7 @@ class Header extends Component {
 
     const refreshButton = (
       <IconButton title="Refresh" 
-                  onTouchTap={() => getTodos(pathname === 'all')}
+                  onTouchTap={() => getTodos(pathname === '/all')}
                   disabled={busy}>
         <RefreshIcon/>
       </IconButton>
