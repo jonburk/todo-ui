@@ -35,7 +35,7 @@ class TodoItem extends Component {
     );
 
     const overdueColor = '#cb0044';
-    const overdue = (todo.dueDate && moment().startOf('day').add(1, 'days').isAfter(todo.dueDate));
+    const overdue = (todo.dueDate && moment().startOf('day').isAfter(todo.dueDate));
     const checkBoxColor = overdue ? overdueColor : palette.accent1Color;
 
     const repeatText = todo.repeat ? (
