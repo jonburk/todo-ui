@@ -1,15 +1,26 @@
 html {
     font-family: 'Roboto', sans-serif;
-}
-
-body {
-    margin: 0;
+    position: relative;  
 }
 
 .body {
-    overflow-y: auto;
-    overflow-x: hidden;
-    height: calc(100vh - 120px);
+    margin-top: 60px;
+    margin-bottom: 60px;
+    height: 100%;
+}
+
+.header {
+    position: fixed; 
+    top: 0;
+    width: 100%;   
+    z-index: 100;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 100;
 }
 
 .empty-list {
