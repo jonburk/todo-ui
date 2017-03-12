@@ -28,7 +28,8 @@ ReactDOM.render(
       <Route path='/' component={App}>
         <IndexRoute component={TodoList}/>
         <Route path='/all' component={() => <TodoList all={true}/>}/>
-        <Route path='/add' component={AddEditTask}/>
+        <Route path='/add' component={() => <AddEditTask add={true}/>}/>
+        <Route path='/edit/:id' component={AddEditTask}/>
       </Route>
     </Router>
   </Provider>,

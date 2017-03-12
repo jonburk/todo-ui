@@ -12,7 +12,7 @@ import DeleteIcon from 'material-ui/svg-icons/action/delete';
 
 class TodoItem extends Component {
   render() {
-    const { todo, openDeleteConfirmation } = this.props;
+    const { todo, openDeleteConfirmation, push } = this.props;
     const { palette } = this.props.muiTheme;
 
     const rightIconMenu = (
@@ -26,7 +26,8 @@ class TodoItem extends Component {
                   leftIcon={<ScheduleIcon/>}
                   onTouchTap={() => this.refs.reschedule.openDialog()}/>
         <MenuItem primaryText="Edit" 
-                  leftIcon={<EditIcon/>}/>
+                  leftIcon={<EditIcon/>}
+                  onTouchTap={() => push(`/edit/${todo._id}`)}/>
         <MenuItem primaryText="Delete" 
                   leftIcon={<DeleteIcon/>}
                   onTouchTap={() => openDeleteConfirmation(todo)}/>

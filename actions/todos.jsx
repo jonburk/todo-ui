@@ -45,6 +45,25 @@ export function getTodos(all) {
   }
 }
 
+export function getTodo(id) {
+  return (dispatch) => {
+    dispatch(setBusy(true));
+
+    axios.get(`${API_URL}/tasks/${id}`)
+         .then(response => {
+           dispatch({
+             type: types.GET_TODO,
+             payload: response.data
+           })
+         })
+         .catch((error) => dispatch(setError('Unable to get task.', error)));
+  }
+}
+
+export function startAddTodo() {
+  return { type: types.START_ADD_TODO };
+}
+
 export function addTodo(task) {
   return (dispatch) => {
     dispatch(setBusy(true));
@@ -83,16 +102,30 @@ export function deleteTodo(id) {
   }
 }
 
-export function editTodo(todo) {
+export function editTodo(task) {
   return (dispatch) => {
-    axios.put(`${API_URL}/tasks/${todo._id}`, todo)    
+    dispatch(setBusy(true));
+
+    if (task.dueDate) {
+      task.dueDate = moment(task.dueDate).startOf('day').format('YYYY-MM-DD');
+    } else {
+      delete task.dueDate;
+    }
+
+    if (_.get(task, 'repeat.rate')) {
+      task.repeat.rate = parseInt(task.repeat.rate);
+    }
+
+    axios.put(`${API_URL}/tasks/${task._id}`, task)
          .then(response => {
            dispatch({ 
-             type: types.EDIT_TODO,
-             todo
-            })
+             type: types.EDIT_TODO, 
+             task 
+           });
+
+           dispatch(push('/'));
          })
-         .catch((error) => dispatch(setError('Unable to update task.', error)));
+         .catch((error) => dispatch(setError('Unable to update task.', error)))
   }
 }
 

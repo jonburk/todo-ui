@@ -22,10 +22,12 @@ const validate = values => {
 
 class AddEditTask extends Component {
   render() {
-    const { handleSubmit, change, dispatch, submitting } = this.props;
-    const { addTodo } = this.props.actions;
+    const { handleSubmit, change, dispatch, submitting, add } = this.props;
+    const { addTodo, editTodo } = this.props.actions;
     const { categoryNames, busy } = this.props.todos;
     const { palette } = this.props.muiTheme;
+
+    const save = add ? addTodo : editTodo;
 
     const style = {
       padding: '0 16px'
@@ -34,7 +36,7 @@ class AddEditTask extends Component {
     return (
       <form>
         <div style={style}>
-          <h2>New Task</h2>
+          <h2>{add ? 'New Task' : 'Edit Task'}</h2>
           <Field component={TextField} 
                  hintText='Name' 
                  floatingLabelText='Name' 
@@ -97,26 +99,33 @@ class AddEditTask extends Component {
               </Field>                        
             </CardText>
           </Card>
-          <RaisedButton label='Add' 
+          <RaisedButton label={add ? 'Add'  : 'Save'} 
                         secondary={true} 
                         style={{margin: '16px 0', float: 'right'}}
                         type='button'
                         disabled={submitting || busy}
-                        onTouchTap={handleSubmit(addTodo)}/>
+                        onTouchTap={handleSubmit(save)}/>
         </div>
       </form>
     )
   }
 
-  componentDidMount() {
-    const { actions } = this.props;
+  componentWillMount() {
+    const { actions, add, params } = this.props;
     actions.getCategoryNames();
+
+    if (add) {
+      actions.startAddTodo();
+    } else {
+      actions.getTodo(params.id);
+    }
   }
 }
 
 function mapStateToProps(state) {
   return {
-    todos: state.todos
+    todos: state.todos,
+    initialValues: state.todos.addEditTask
   };
 }
 
@@ -126,7 +135,18 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default reduxForm({form: 'addEditTask', validate})(connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(muiThemeable()(AddEditTask)));
+AddEditTask.propTypes = {
+  add: PropTypes.bool
+};
+
+AddEditTask = reduxForm({
+  form: 'addEditTask',
+  validate,
+  enableReinitialize: true
+})(AddEditTask);
+
+AddEditTask = connect(mapStateToProps, mapDispatchToProps)(AddEditTask);
+
+AddEditTask = muiThemeable()(AddEditTask);
+
+export default AddEditTask;

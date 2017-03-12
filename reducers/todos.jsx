@@ -23,6 +23,14 @@ export default function todos(state = initialState, action) {
       newState.categories = action.payload;
       break;
 
+    case types.GET_TODO:
+      newState.addEditTask = action.payload;
+      break;
+
+    case types.START_ADD_TODO:
+      newState.addEditTask = {};
+      break;
+
     case types.ADD_TODO:
       break;      
 
