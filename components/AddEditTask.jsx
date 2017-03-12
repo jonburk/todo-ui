@@ -68,7 +68,7 @@ class AddEditTask extends Component {
                    floatingLabelText='Due date'
                    fullWidth={true}
                    autoOk={true}
-                   format={null}
+                   format={value => value ? new Date(value) : null}
                    defaultValue={null}
                    name='dueDate'/>
             <IconButton style={{position: 'absolute', top: '24px', right: '0px'}}
@@ -121,7 +121,7 @@ class AddEditTask extends Component {
                         style={{margin: '16px', float: 'right'}}
                         type='button'
                         disabled={submitting || busy}
-                        onTouchTap={() => push('/all')}/>                        
+                        onTouchTap={() => push('/')}/>                        
         </div>
       </form>
     )
