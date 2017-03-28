@@ -12,7 +12,7 @@ import DeleteIcon from 'material-ui/svg-icons/action/delete';
 
 class TodoItem extends Component {
   render() {
-    const { todo, openDeleteConfirmation, push } = this.props;
+    const { todo, openDeleteConfirmation, push, completeTodo, uncompleteTodo } = this.props;
     const { palette } = this.props.muiTheme;
 
     const rightIconMenu = (
@@ -50,9 +50,10 @@ class TodoItem extends Component {
 
     return (
       <ListItem primaryText={todo.name}
-                style={overdue && !todo.completed ? {color: overdueColor} : null}
-                onTouchTap={() => this.toggleTodo(todo)}
-                leftIcon={todo.completed ? <CheckBoxIcon color={palette.disabledColor} /> : <CheckBoxBlankIcon color={checkBoxColor} />}
+                style={overdue && !todo.completed ? {color: overdueColor} : null}                
+                leftIcon={todo.completed ? 
+                  <CheckBoxIcon color={palette.disabledColor} onTouchTap={() => uncompleteTodo(todo._id)} /> : 
+                  <CheckBoxBlankIcon color={checkBoxColor} onTouchTap={() => completeTodo(todo._id)} />}
                 secondaryText={<div>{dueText}{repeatText}</div>}
                 secondaryTextLines={2}
                 rightIconButton={rightIconMenu}>
@@ -76,16 +77,6 @@ class TodoItem extends Component {
       return repeat.unit.substring(0, repeat.unit.length - 1);
     } else {
       return `${repeat.rate} ${repeat.unit}`;
-    }
-  }
-
-  toggleTodo(todo) {
-    const { completeTodo, uncompleteTodo } = this.props;
-
-    if (!todo.completed) {
-      completeTodo(todo._id);
-    } else {
-      uncompleteTodo(todo._id);
     }
   }
 }
