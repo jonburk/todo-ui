@@ -4,7 +4,7 @@ html {
 
 .body {
     margin-top: 64px;
-    margin-bottom: 56px;
+    padding-bottom: 56px;
     position: absolute;
     width: 100%;
 }
