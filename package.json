@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server -d --hot --inline --progress --colors --port 8081",
-    "build": "ENV_TYPE=production webpack --progress --colors"
+    "build": "cross-env ENV_TYPE=production webpack --progress --colors"
   },
   "author": "Jonathan Burk",
   "license": "UNLICENSED",
@@ -20,6 +20,7 @@
     "babel-preset-react": "^6.16.0",
     "babel-preset-stage-1": "^6.16.0",
     "babel-runtime": "^6.11.6",
+    "cross-env": "^4.0.0",
     "css-loader": "^0.26.2",
     "eslint": "^3.7.1",
     "eslint-loader": "^1.5.0",
