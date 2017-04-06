@@ -66,7 +66,6 @@ class AddEditTask extends Component {
                  fullWidth={true}
                  autoOk={true}
                  format={value => value ? new Date(value) : null}
-                 defaultValue={null}
                  name='dueDate'/>
           <IconButton style={{position: 'absolute', top: '24px', right: '0px'}}
                       iconStyle={{color: palette.secondaryTextColor}}
