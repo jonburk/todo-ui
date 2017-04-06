@@ -3,6 +3,7 @@ var path = require('path');
 var webpack = require('webpack');
 var fs = require("fs");
 var BUILD = process.env.ENV_TYPE === 'production';
+
 module.exports = {
   devtool: BUILD ? 'source-map' : "eval",
   resolve: {
@@ -49,5 +50,8 @@ module.exports = {
           name: '[name].[ext]',
         },
       }]
+  },
+  externals: {
+    'Config': JSON.stringify(BUILD ? require('./config/prod.json') : require('./config/dev.json'))
   }
 };

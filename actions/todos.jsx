@@ -3,8 +3,9 @@ import * as types from '../constants/ActionTypes';
 import moment from 'moment';
 import qs from 'qs';
 import { push as navigate } from 'react-router-redux';
+import Config from 'Config';
 
-const API_URL = 'http://localhost:8080/api';
+const API_URL = `${Config.App.api.host}:${Config.App.api.port}/api`;
 
 export function push(destination) {
   return (dispatch) => {
