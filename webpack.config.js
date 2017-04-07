@@ -1,8 +1,8 @@
 'use strict';
-var path = require('path');
-var webpack = require('webpack');
-var fs = require("fs");
-var BUILD = process.env.ENV_TYPE === 'production';
+const path = require('path');
+const webpack = require('webpack');
+const fs = require("fs");
+const BUILD = process.env.ENV_TYPE === 'production';
 
 module.exports = {
   devtool: BUILD ? 'source-map' : "eval",
@@ -10,11 +10,11 @@ module.exports = {
       extensions: ['.js', '.jsx', '.css']
   },
   entry: {
-    bundle: ['babel-polyfill', "./src/index.jsx", "./src/main.css", "./src/index.html"],
+    bundle: ['babel-polyfill', "./src/index.jsx", "./src/main.css", "./src/index.html"]
   },
   output: {
     path: __dirname + "/static",
-    filename: '[name].js',
+    filename: '[name].js'
   },
   plugins: BUILD ? [
     new webpack.DefinePlugin({
@@ -47,8 +47,8 @@ module.exports = {
         loader: 'url-loader',
         query: { 
           limit: 1,
-          name: '[name].[ext]',
-        },
+          name: '[name].[ext]'
+        }
       }]
   },
   externals: {
