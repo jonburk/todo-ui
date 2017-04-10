@@ -27,6 +27,8 @@ const validate = values => {
       errors.repeat.unit = 'Required';
     }
   }
+  
+  return errors;
 };
 
 class AddEditTask extends Component {
