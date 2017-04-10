@@ -12,7 +12,7 @@ import AddIcon from 'material-ui/svg-icons/content/add';
 
 class TodoList extends Component {
   render() {
-    const { actions, all } = this.props;
+    const { actions, mode } = this.props;
     const { categories, deleteConfirmation, busy } = this.props.todos;
     const { palette } = this.props.muiTheme;
 
@@ -27,7 +27,7 @@ class TodoList extends Component {
       </List>
     )
 
-    const todayPlaceholder = (
+    const filteredListPlaceholder = (
       <div className='empty-list'>
         <CheckCircleIcon style={{width: '60px', height: '60px'}} color={palette.accent2Color}/>
         <div className='empty-list-message'>Nothing left to do!</div>
@@ -40,7 +40,7 @@ class TodoList extends Component {
       </div>
     )    
 
-    const placeholder = all ? allPlaceholder : todayPlaceholder;
+    const placeholder = mode === 'all' ? allPlaceholder : filteredListPlaceholder;
 
     const busyIndicator = <BusyIndicator/>
 
@@ -76,7 +76,7 @@ class TodoList extends Component {
   }
 
   componentDidMount() {
-    this.props.actions.getTodos(this.props.all);
+    this.props.actions.getTodos(this.props.mode);
   }
 }
 

@@ -4,12 +4,12 @@ import { Paper, BottomNavigation, BottomNavigationItem } from 'material-ui';
 
 import TodayIcon from 'material-ui/svg-icons/action/today';
 import ListIcon from 'material-ui/svg-icons/action/list';
-import AddIcon from 'material-ui/svg-icons/content/add';
+import DateRangeIcon from 'material-ui/svg-icons/action/date-range';
 
 class Footer extends Component {
   render() {
     const { pathname } = this.props.router.location;
-    const paths = ['/', '/all'];
+    const paths = ['/', '/week', '/all'];
 
     return (
       <footer className="footer">        
@@ -34,11 +34,17 @@ class Footer extends Component {
                               icon={<TodayIcon/>}/>
       );
       items.push(
+        <BottomNavigationItem key='week' 
+                              label='This Week' 
+                              onTouchTap={() => actions.push('/week')}
+                              icon={<DateRangeIcon/>}/>
+      );  
+      items.push(
         <BottomNavigationItem key='all' 
                               label='All' 
                               onTouchTap={() => actions.push('/all')}
                               icon={<ListIcon/>}/>
-      );
+      );    
     } 
 
     return items;

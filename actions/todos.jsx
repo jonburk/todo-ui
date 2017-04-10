@@ -26,13 +26,15 @@ export function getCategoryNames() {
   }
 }
 
-export function getTodos(all) {
+export function getTodos(mode) {
   return (dispatch) => {
     dispatch(setBusy(true));
 
     const params = {}
-    if (!all) {
+    if (mode === 'today') {
       params.dueDate = moment().format('YYYY-MM-DD');
+    } else if (mode === 'week') {
+      params.dueDate = moment().endOf('isoWeek').format('YYYY-MM-DD');
     }
     
     axios.get(`${API_URL}/tasks?${qs.stringify(params)}`)

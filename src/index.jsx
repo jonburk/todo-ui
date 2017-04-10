@@ -27,8 +27,9 @@ ReactDOM.render(
   <Provider store={store}>
     <Router history={history}>
       <Route path='/' component={App}>
-        <IndexRoute component={TodoList}/>
-        <Route path='/all' component={() => <TodoList all={true}/>}/>
+        <IndexRoute component={() => <TodoList mode='today'/>}/>
+        <Route path='/all' component={() => <TodoList mode='all'/>}/>
+        <Route path='/week' component={() => <TodoList mode='week'/>}/>
         <Route path='/add' component={() => <AddEditTask add={true}/>}/>
         <Route path='/edit/:id' component={AddEditTask}/>
       </Route>
