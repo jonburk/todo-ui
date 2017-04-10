@@ -6,7 +6,7 @@
   "repository": "https://github.com/jonburk/todo-ui",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-dev-server -d --hot --inline --progress --colors --port 8081 --host 10.0.0.2",
+    "start": "webpack-dev-server -d --hot --inline --progress --colors --port 8081 --host localhost",
     "build": "cross-env ENV_TYPE=production webpack --progress --colors"
   },
   "author": "Jonathan Burk",
