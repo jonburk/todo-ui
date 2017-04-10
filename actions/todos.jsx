@@ -67,6 +67,10 @@ export function startAddTodo() {
   return { type: types.START_ADD_TODO };
 }
 
+export function cancelAddEditTodo() {
+  return { type: types.CANCEL_ADD_EDIT_TODO };
+}
+
 export function addTodo(task) {
   return (dispatch) => {
     dispatch(setBusy(true));

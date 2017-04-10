@@ -8,7 +8,7 @@ const initialState = {
     open: false
   },
   busy: true,
-  addEditTask: {}
+  addEditTask: null
 }
 
 export default function todos(state = initialState, action) {
@@ -29,6 +29,10 @@ export default function todos(state = initialState, action) {
 
     case types.START_ADD_TODO:
       newState.addEditTask = {};
+      break;
+
+    case types.CANCEL_ADD_EDIT_TODO:
+      newState.addEditTask = null;
       break;
 
     case types.ADD_TODO:

@@ -9,6 +9,7 @@ import { TextField, AutoComplete, DatePicker, SelectField } from 'redux-form-mat
 import ClearIcon from 'material-ui/svg-icons/content/clear';
 import CheckboxIcon from 'material-ui/svg-icons/toggle/check-box';
 import CheckboxOutlineIcon from 'material-ui/svg-icons/toggle/check-box-outline-blank';
+import BusyIndicator from './BusyIndicator';
 
 const validate = values => {
   const errors = {};
@@ -26,21 +27,23 @@ const validate = values => {
       errors.repeat.unit = 'Required';
     }
   }
-
-  return errors;
 };
 
 class AddEditTask extends Component {
   render() {
     const { handleSubmit, change, dispatch, submitting, add } = this.props;
-    const { addTodo, editTodo, push } = this.props.actions;
-    const { categoryNames, busy } = this.props.todos;
+    const { addTodo, editTodo, push, cancelAddEditTodo } = this.props.actions;
+    const { categoryNames, busy, addEditTask } = this.props.todos;
     const { palette } = this.props.muiTheme;
 
     const save = add ? addTodo : editTodo;
 
     const style = {
       padding: '0 16px'
+    }
+
+    if (addEditTask == null) {
+      return <BusyIndicator/>;
     }
 
     return (
@@ -77,7 +80,7 @@ class AddEditTask extends Component {
         <Card zDepth={1} 
               style={{marginTop: '16px'}} 
               expandable={true} 
-              initiallyExpanded={true}>
+              initiallyExpanded={!_.isEmpty(addEditTask.repeat)}>
           <CardHeader title='Repeat this task'
                       actAsExpander={true}
                       showExpandableButton={true}
@@ -117,7 +120,11 @@ class AddEditTask extends Component {
                       style={{margin: '16px', float: 'right'}}
                       type='button'
                       disabled={submitting || busy}
-                      onTouchTap={() => push('/')}/>   
+                      onTouchTap={() => {
+                        cancelAddEditTodo();
+                        push('/');
+                      }
+                      }/>   
       </form>
     )
   }

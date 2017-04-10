@@ -13,3 +13,4 @@ export const SET_BUSY = 'SET_BUSY';
 export const SET_ERROR = 'SET_ERROR';
 export const PUSH = 'PUSH';
 export const GET_CATEGORY_NAMES = 'GET_CATEGORY_NAMES';
+export const CANCEL_ADD_EDIT_TODO = 'CANCEL_ADD_EDIT_TODO';
