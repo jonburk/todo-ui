@@ -30,15 +30,12 @@ class TodoList extends Component {
     const todayPlaceholder = (
       <div className='empty-list'>
         <CheckCircleIcon style={{width: '60px', height: '60px'}} color={palette.accent2Color}/>
-        <div className='empty-list-message'>Nothing left to do today!</div>
+        <div className='empty-list-message'>Nothing left to do!</div>
       </div>
     )
 
     const allPlaceholder = (
       <div className='empty-list'>
-        <FloatingActionButton secondary={true} onTouchTap={() => actions.push('add')}>
-          <AddIcon/>
-        </FloatingActionButton>
         <div className='empty-list-message'>Begin by adding a task&hellip;</div>
       </div>
     )    
@@ -57,8 +54,14 @@ class TodoList extends Component {
     }
 
     return (
-      <div>
+      <div style={{marginBottom: '66px'}}>
         {component}
+        <FloatingActionButton secondary={true} 
+                              onTouchTap={() => 
+                              actions.push('add')}
+                              style={{position: 'fixed', right: '10px', bottom: '66px', zIndex: 100}}>
+          <AddIcon/>
+        </FloatingActionButton>        
         <Dialog open={deleteConfirmation.open}
                 modal={false}
                 onRequestClose={() => actions.closeDeleteConfirmation()}

@@ -9,7 +9,7 @@ import AddIcon from 'material-ui/svg-icons/content/add';
 class Footer extends Component {
   render() {
     const { pathname } = this.props.router.location;
-    const paths = ['/', '/all', '/add'];
+    const paths = ['/', '/all'];
 
     return (
       <footer className="footer">        
@@ -38,12 +38,6 @@ class Footer extends Component {
                               label='All' 
                               onTouchTap={() => actions.push('/all')}
                               icon={<ListIcon/>}/>
-      );
-      items.push(
-        <BottomNavigationItem key='add' 
-                              label='Add Task' 
-                              onTouchTap={() => actions.push('/add')}
-                              icon={<AddIcon/>}/>
       );
     } 
 
