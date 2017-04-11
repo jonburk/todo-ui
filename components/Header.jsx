@@ -10,9 +10,22 @@ class Header extends Component {
     const { busy } = this.props;
     const { pathname } = this.props.router.location;
 
+    let mode = '';
+    switch (pathname) {
+      case '/':
+        mode = 'today';
+        break;
+      case '/week':
+        mode = 'week';
+        break;
+      case '/all':
+        mode = 'all';
+        break;
+    }
+
     const refreshButton = (
       <IconButton title="Refresh" 
-                  onTouchTap={() => getTodos(pathname === '/all')}
+                  onTouchTap={() => getTodos(mode)}
                   disabled={busy}>
         <RefreshIcon/>
       </IconButton>
@@ -23,7 +36,7 @@ class Header extends Component {
           <AppBar title="Todo"                  
                   showMenuIconButton={false}
                   zDepth={2}
-                  iconElementRight={pathname === '/all' || pathname === '/' ? refreshButton : null} />
+                  iconElementRight={mode ? refreshButton : null} />
       </header>
     );
   }
