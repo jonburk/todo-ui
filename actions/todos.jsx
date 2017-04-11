@@ -3,6 +3,7 @@ import * as types from '../constants/ActionTypes';
 import moment from 'moment';
 import qs from 'qs';
 import { push as navigate } from 'react-router-redux';
+import { goBack as navigateBack } from 'react-router-redux';
 import Config from 'Config';
 
 const API_URL = `${Config.App.api.host}:${Config.App.api.port}/api`;
@@ -10,6 +11,12 @@ const API_URL = `${Config.App.api.host}:${Config.App.api.port}/api`;
 export function push(destination) {
   return (dispatch) => {
     dispatch(navigate(destination));
+  }
+}
+
+export function goBack() {
+  return (dispatch) => {
+    dispatch(navigateBack());
   }
 }
 
@@ -125,7 +132,7 @@ function updateTodo(task, isReschedule) {
            });
 
            if (!isReschedule) {
-             dispatch(push('/'));
+             dispatch(navigateBack());
            }
          })
          .catch((error) => dispatch(setError('Unable to update task.', error)))
