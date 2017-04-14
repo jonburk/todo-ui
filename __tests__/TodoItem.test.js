@@ -28,6 +28,8 @@ function setup(todo) {
     todo,
     push: jest.fn(),
     openDeleteConfirmation: jest.fn(),
+    completeTodo: jest.fn(),
+    uncompleteTodo: jest.fn(),
     muiTheme: getMuiTheme()
   };
 
@@ -198,6 +200,38 @@ describe('components', () => {
 
       expect(props.push.mock.calls.length).toBe(1);
       expect(props.push.mock.calls[0][0]).toBe(`/edit/${props.todo._id}`);
+    });
+
+    it('should complete tasks', () => {
+      const todo = {
+        _id: '1',
+        dueDate: null,
+        completed: false,
+        name: 'Test Item',
+        repeat: null
+      }
+
+      const { wrapper, options, props } = setup(todo);
+
+      wrapper.find(ListItem).dive(options).find(CheckBoxBlankIcon).simulate('touchTap');
+      expect(props.completeTodo.mock.calls.length).toBe(1);
+      expect(props.completeTodo.mock.calls[0][0]).toBe('1');
+    });
+
+    it('should un-complete tasks', () => {
+      const todo = {
+        _id: '1',
+        dueDate: null,
+        completed: true,
+        name: 'Test Item',
+        repeat: null
+      }
+
+      const { wrapper, options, props } = setup(todo);
+
+      wrapper.find(ListItem).dive(options).find(CheckBoxIcon).simulate('touchTap');
+      expect(props.uncompleteTodo.mock.calls.length).toBe(1);
+      expect(props.uncompleteTodo.mock.calls[0][0]).toBe('1');
     });
 
     // TODO add tests for rescheduling
