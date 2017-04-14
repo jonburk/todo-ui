@@ -11,7 +11,7 @@ import ScheduleIcon from 'material-ui/svg-icons/action/schedule';
 import EditIcon from 'material-ui/svg-icons/image/edit';
 import DeleteIcon from 'material-ui/svg-icons/action/delete';
 
-class TodoItem extends Component {
+export class TodoItem extends Component {
   render() {
     const { todo, openDeleteConfirmation, push, completeTodo, uncompleteTodo } = this.props;
     const { palette } = this.props.muiTheme;
