@@ -99,5 +99,14 @@ describe('components', () => {
       expect(props.actions.push.mock.calls.length).toBe(1);
       expect(props.actions.push.mock.calls[0][0]).toBe('/all');      
     });
+
+    it('should not display navigation items when disabled', () => {
+      const { wrapper } = setup('/', true);
+
+      const bottomNavigation = wrapper.find(BottomNavigation);
+      expect(bottomNavigation.length).toBe(1);
+
+      expect(bottomNavigation.find(BottomNavigationItem).length).toBe(0);   
+    });
   })
 })
