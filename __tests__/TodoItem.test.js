@@ -30,6 +30,7 @@ function setup(todo) {
     openDeleteConfirmation: jest.fn(),
     completeTodo: jest.fn(),
     uncompleteTodo: jest.fn(),
+    rescheduleTodo: jest.fn(),
     muiTheme: getMuiTheme()
   };
 
@@ -234,6 +235,23 @@ describe('components', () => {
       expect(props.uncompleteTodo.mock.calls[0][0]).toBe('1');
     });
 
-    // TODO add tests for rescheduling
+    it('should reschedule tasks', () => {
+      const todo = {
+        _id: '1',
+        dueDate: null,
+        completed: true,
+        name: 'Test Item',
+        repeat: null
+      }
+
+      const { wrapper, props } = setup(todo);
+
+      const datePicker = wrapper.find(DatePicker);
+      expect(datePicker.length).toBe(1);
+      datePicker.simulate('change', null, new Date(2010, 0, 2, 0, 0, 0));
+      expect(props.rescheduleTodo.mock.calls.length).toBe(1);
+      expect(props.rescheduleTodo.mock.calls[0][0]).toBe(todo);
+      expect(todo.dueDate).toBe('2010-01-02');
+    })
   })
 })
