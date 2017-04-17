@@ -12,12 +12,14 @@ jest.mock(
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import expect from 'expect';
+import sinon from 'sinon';
 import { TodoList } from '../components/TodoList';
 import TodoCategory from '../components/TodoCategory';
 import BusyIndicator from '../components/BusyIndicator';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import injectTapEventPlugin from "react-tap-event-plugin";
 import { List, Dialog, FlatButton, FloatingActionButton } from 'material-ui';
 import CheckCircleIcon from 'material-ui/svg-icons/action/check-circle';
 import AddIcon from 'material-ui/svg-icons/content/add';
@@ -35,7 +37,8 @@ function setup(categories = [], mode = 'all', busy = false, deleteConfirmation) 
     actions: {
       push: jest.fn(),
       closeDeleteConfirmation: jest.fn(),
-      deleteTodo: jest.fn()
+      deleteTodo: jest.fn(),
+      getTodos: jest.fn()
     },
     mode,
     todos: {
@@ -218,6 +221,18 @@ describe('components', () => {
       button.simulate('touchTap');
       expect(props.actions.deleteTodo.mock.calls.length).toBe(1);  
       expect(props.actions.deleteTodo.mock.calls[0][0]).toBe('1'); 
+    });
+
+    it('should get the todo list on mount', () => {
+      injectTapEventPlugin();
+      const { options, props } = setup([], 'all');
+
+      sinon.spy(TodoList.prototype, 'componentDidMount');
+      const wrapper = mount(<TodoList {...props}/>, options);
+
+      expect(TodoList.prototype.componentDidMount.calledOnce).toBeTruthy();
+      expect(props.actions.getTodos.mock.calls.length).toBe(1);  
+      expect(props.actions.getTodos.mock.calls[0][0]).toBe('all'); 
     });
   })
 })
