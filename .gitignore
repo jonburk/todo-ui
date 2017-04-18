@@ -4,3 +4,4 @@ static
 .module-cache
 *.log*
 config/prod.json
+coverage

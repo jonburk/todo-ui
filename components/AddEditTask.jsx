@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import muiThemeable from 'material-ui/styles/muiThemeable';
 import * as TodoActions from '../actions/todos';
+import _ from 'lodash';
 import { IconButton, Card, CardText, CardHeader, MenuItem, RaisedButton } from 'material-ui';
 import { TextField, AutoComplete, DatePicker, SelectField } from 'redux-form-material-ui';
 import ClearIcon from 'material-ui/svg-icons/content/clear';
@@ -12,7 +13,7 @@ import CheckboxIcon from 'material-ui/svg-icons/toggle/check-box';
 import CheckboxOutlineIcon from 'material-ui/svg-icons/toggle/check-box-outline-blank';
 import BusyIndicator from './BusyIndicator';
 
-const validate = values => {
+export const validate = values => {
   const errors = {};
 
   if (!values.name) {
@@ -32,7 +33,7 @@ const validate = values => {
   return errors;
 };
 
-class AddEditTask extends Component {
+export class AddEditTask extends Component {
   render() {
     const { handleSubmit, change, dispatch, submitting, add } = this.props;
     const { addTodo, editTodo, goBack, cancelAddEditTodo } = this.props.actions;
@@ -161,14 +162,14 @@ AddEditTask.propTypes = {
   add: PropTypes.bool
 };
 
-AddEditTask = reduxForm({
+let AddEditTaskContainer = reduxForm({
   form: 'addEditTask',
   validate,
   enableReinitialize: true
 })(AddEditTask);
 
-AddEditTask = connect(mapStateToProps, mapDispatchToProps)(AddEditTask);
+AddEditTaskContainer = connect(mapStateToProps, mapDispatchToProps)(AddEditTaskContainer);
 
-AddEditTask = muiThemeable()(AddEditTask);
+AddEditTaskContainer = muiThemeable()(AddEditTaskContainer);
 
-export default AddEditTask;
+export default AddEditTaskContainer;

@@ -7,11 +7,12 @@ import BusyIndicator from './BusyIndicator';
 import { List, Dialog, FlatButton, FloatingActionButton } from 'material-ui';
 import * as TodoActions from '../actions/todos';
 import muiThemeable from 'material-ui/styles/muiThemeable';
+import _ from 'lodash';
 
 import CheckCircleIcon from 'material-ui/svg-icons/action/check-circle';
 import AddIcon from 'material-ui/svg-icons/content/add';
 
-class TodoList extends Component {
+export class TodoList extends Component {
   render() {
     const { actions, mode } = this.props;
     const { categories, deleteConfirmation, busy } = this.props.todos;
@@ -54,6 +55,8 @@ class TodoList extends Component {
       component = todoList;
     }
 
+    const deleteConfirmationMessage = `Delete ${_.get(deleteConfirmation, 'todo.name', '')}?`;
+
     return (
       <div style={{marginBottom: '66px'}}>
         {component}
@@ -70,7 +73,7 @@ class TodoList extends Component {
                   <FlatButton label='Cancel' primary={false} onTouchTap={() => actions.closeDeleteConfirmation()}/>,
                   <FlatButton label='Delete' primary={true} onTouchTap={() => actions.deleteTodo(deleteConfirmation.todo._id)}/>
                 ]}>
-          Delete "{_.get(deleteConfirmation, 'todo.name', '')}"?
+          {deleteConfirmationMessage}
         </Dialog>
       </div>
     );

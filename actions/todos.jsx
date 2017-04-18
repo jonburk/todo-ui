@@ -4,6 +4,7 @@ import moment from 'moment';
 import qs from 'qs';
 import { push as navigate } from 'react-router-redux';
 import { goBack as navigateBack } from 'react-router-redux';
+import _ from 'lodash';
 import Config from 'Config';
 
 const API_URL = `${Config.App.api.host}:${Config.App.api.port}/api`;
@@ -22,7 +23,7 @@ export function goBack() {
 
 export function getCategoryNames() {
   return (dispatch) => {
-    axios.get(`${API_URL}/tasks/categories`)
+    return axios.get(`${API_URL}/tasks/categories`)
          .then(response => {
            dispatch({
              type: types.GET_CATEGORY_NAMES,
@@ -44,7 +45,7 @@ export function getTodos(mode) {
       params.dueDate = moment().endOf('isoWeek').format('YYYY-MM-DD');
     }
     
-    axios.get(`${API_URL}/tasks?${qs.stringify(params)}`)
+    return axios.get(`${API_URL}/tasks${_.isEmpty(params) ? '' : '?'}${qs.stringify(params)}`)
          .then(response => {
            dispatch({
              type: types.GET_TODOS,
@@ -59,7 +60,7 @@ export function getTodo(id) {
   return (dispatch) => {
     dispatch(setBusy(true));
 
-    axios.get(`${API_URL}/tasks/${id}`)
+    return axios.get(`${API_URL}/tasks/${id}`)
          .then(response => {
            dispatch({
              type: types.GET_TODO,
@@ -84,7 +85,7 @@ export function addTodo(task) {
 
     prepareTask(task);    
 
-    axios.post(`${API_URL}/tasks`, task)
+    return axios.post(`${API_URL}/tasks`, task)
          .then(response => {
            dispatch({ 
              type: types.ADD_TODO, 
@@ -99,7 +100,7 @@ export function addTodo(task) {
 
 export function deleteTodo(id) {
   return (dispatch) => {
-    axios.delete(`${API_URL}/tasks/${id}`)
+    return axios.delete(`${API_URL}/tasks/${id}`)
          .then(response => {
            dispatch({
              type: types.DELETE_TODO, 
@@ -124,7 +125,7 @@ function updateTodo(task, isReschedule) {
 
     prepareTask(task);
 
-    axios.put(`${API_URL}/tasks/${task._id}`, task)
+    return axios.put(`${API_URL}/tasks/${task._id}`, task)
          .then(response => {
            dispatch({ 
              type: types.EDIT_TODO, 
@@ -141,7 +142,7 @@ function updateTodo(task, isReschedule) {
 
 export function completeTodo(id) {
   return (dispatch) => {
-    axios.post(`${API_URL}/tasks/${id}/complete`)
+    return axios.post(`${API_URL}/tasks/${id}/complete`)
          .then(response => {
            dispatch({
              type: types.COMPLETE_TODO,
@@ -154,7 +155,7 @@ export function completeTodo(id) {
 
 export function uncompleteTodo(id) {
   return (dispatch) => {
-    axios.delete(`${API_URL}/tasks/${id}/complete`)
+    return axios.delete(`${API_URL}/tasks/${id}/complete`)
          .then(response => {
            dispatch({
              type: types.UNCOMPLETE_TODO,
@@ -167,7 +168,7 @@ export function uncompleteTodo(id) {
 
 export function cleanup() {
   return (dispatch) => {
-    axios.post(`${API_URL}/tasks/cleanup`, null, {validateStatus: status => status < 400})
+    return axios.post(`${API_URL}/tasks/cleanup`, null, {validateStatus: status => status < 400})
          .catch(error => console.error(error));    
   }
 }
@@ -185,8 +186,6 @@ export function setBusy(busy) {
 }
 
 export function setError(message, error) {
-  console.error(message);
-  console.error(error);
   return { type: types.SET_ERROR, error: message };
 }
 
