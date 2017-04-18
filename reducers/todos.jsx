@@ -2,7 +2,7 @@ import * as types from '../constants/ActionTypes';
 import _ from 'lodash';
 
 const initialState = {
-  categoryNames: ['alpha', 'bravo'],
+  categoryNames: [],
   categories: [],
   deleteConfirmation: {
     open: false
