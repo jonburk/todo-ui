@@ -1,19 +1,18 @@
-'use strict';
-const path = require('path');
-const webpack = require('webpack');
-const fs = require("fs");
-const BUILD = process.env.ENV_TYPE === 'production';
+'use strict'
+const path = require('path')
+const webpack = require('webpack')
+const BUILD = process.env.ENV_TYPE === 'production'
 
 module.exports = {
-  devtool: BUILD ? 'source-map' : "eval",
+  devtool: BUILD ? 'source-map' : 'eval',
   resolve: {
-      extensions: ['.js', '.jsx', '.css']
+    extensions: ['.js', '.jsx', '.css']
   },
   entry: {
-    bundle: ['babel-polyfill', "./src/index.jsx", "./src/main.css", "./src/index.html"]
+    bundle: ['babel-polyfill', './src/index.jsx', './src/main.css', './src/index.html']
   },
   output: {
-    path: __dirname + "/static",
+    path: path.join(__dirname, 'static'),
     filename: '[name].js'
   },
   plugins: BUILD ? [
@@ -24,7 +23,7 @@ module.exports = {
     }),
     // Reference: http://webpack.github.io/docs/list-of-plugins.html#noerrorsplugin
     // Only emit files when there are no errors
-    
+
     new webpack.NoEmitOnErrorsPlugin(),
     // Reference: http://webpack.github.io/docs/list-of-plugins.html#uglifyjsplugin
     // Minify all javascript, switch loaders to minimizing mode
@@ -36,22 +35,22 @@ module.exports = {
         // Reference: https://github.com/babel/babel-loader
         // Transpile .js files using babel-loader
         // Compiles ES6 and ES7 into ES5 code
-        test: /\.jsx?$/i,
-        loaders: ['babel-loader'],
-        exclude: /node_modules/
-      },
-      { test: /\.html$/, loader: "file-loader?name=[name].[ext]" },
-      { test: /\.css$/, loader: "file-loader?name=[name].[ext]" },
-      {
-        test: /favicon\.ico$/,
-        loader: 'url-loader',
-        query: { 
-          limit: 1,
-          name: '[name].[ext]'
-        }
-      }]
+      test: /\.jsx?$/i,
+      loaders: ['babel-loader'],
+      exclude: /node_modules/
+    },
+      { test: /\.html$/, loader: 'file-loader?name=[name].[ext]' },
+      { test: /\.css$/, loader: 'file-loader?name=[name].[ext]' },
+    {
+      test: /favicon\.ico$/,
+      loader: 'url-loader',
+      query: {
+        limit: 1,
+        name: '[name].[ext]'
+      }
+    }]
   },
   externals: {
     'Config': JSON.stringify(BUILD ? require('./config/prod.json') : require('./config/dev.json'))
   }
-};
+}

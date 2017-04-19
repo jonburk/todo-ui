@@ -1,6 +1,5 @@
-import { fade } from 'material-ui/utils/colorManipulator'
-import * as Colors from 'material-ui/styles/colors';
-import { spacing, getMuiTheme } from 'material-ui/styles';
+import * as Colors from 'material-ui/styles/colors'
+import { spacing, getMuiTheme } from 'material-ui/styles'
 
 const rawBaseTheme = {
   ...spacing,
@@ -18,7 +17,7 @@ const rawBaseTheme = {
     borderColor: '#a59d95',
     disabledColor: '#b7b1a9'
   }
-};
+}
 
-//Theme must be wrapped in funciton getMuiTheme
-export default getMuiTheme(rawBaseTheme);
+// Theme must be wrapped in funciton getMuiTheme
+export default getMuiTheme(rawBaseTheme)
