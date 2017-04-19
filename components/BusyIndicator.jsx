@@ -1,15 +1,14 @@
-import React, { Component } from "react";
-import PropTypes from 'prop-types';
-import { RefreshIndicator } from 'material-ui';
+import React, { Component } from 'react'
+import { RefreshIndicator } from 'material-ui'
 
 class BusyIndicator extends Component {
-  render() {
-    return <RefreshIndicator top={0} 
-                             left={-60} 
-                             size={120}
-                             style={{marginLeft: '50%', marginTop: 'calc(50vh - 60px)'}}
-                             status='loading'/>    
+  render () {
+    return <RefreshIndicator top={0}
+      left={-60}
+      size={120}
+      style={{marginLeft: '50%', marginTop: 'calc(50vh - 60px)'}}
+      status='loading' />
   }
 }
 
-export default BusyIndicator;
+export default BusyIndicator

@@ -1,5 +1,5 @@
-import * as types from '../constants/ActionTypes';
-import _ from 'lodash';
+import * as types from '../constants/ActionTypes'
+import _ from 'lodash'
 
 const initialState = {
   categoryNames: [],
@@ -11,80 +11,80 @@ const initialState = {
   addEditTask: null
 }
 
-export default function todos(state = initialState, action) {
-  const newState = {...state, busy: false};
+export default function todos (state = initialState, action) {
+  const newState = {...state, busy: false}
 
   switch (action.type) {
     case types.GET_CATEGORY_NAMES:
-      newState.categoryNames = action.payload;
-      break;
+      newState.categoryNames = action.payload
+      break
 
     case types.GET_TODOS:
-      newState.categories = action.payload;
-      break;
+      newState.categories = action.payload
+      break
 
     case types.GET_TODO:
-      newState.addEditTask = action.payload;
-      break;
+      newState.addEditTask = action.payload
+      break
 
     case types.START_ADD_TODO:
-      newState.addEditTask = {};
-      break;
+      newState.addEditTask = {}
+      break
 
     case types.CANCEL_ADD_EDIT_TODO:
-      newState.addEditTask = null;
-      break;
+      newState.addEditTask = null
+      break
 
     case types.ADD_TODO:
-      break;      
+      break
 
     case types.DELETE_TODO:
       // Remove the delete task
-      _.forEach(newState.categories, c => {
-        _.remove(c.tasks, t => t._id === action.id);
-      });
-      
+      newState.categories.forEach(c => {
+        _.remove(c.tasks, t => t._id === action.id)
+      })
+
       // Remove any empty categories (in case this was the last task in the category)
-      _.remove(newState.categories, c => c.tasks.length === 0);
+      _.remove(newState.categories, c => c.tasks.length === 0)
 
       // Close the confirmation dialog
-      newState.deleteConfirmation.open = false;
-      break;
+      newState.deleteConfirmation.open = false
+      break
 
-    case types.EDIT_TODO:      
-      break;
+    case types.EDIT_TODO:
+      break
 
     case types.COMPLETE_TODO:
-      _.forEach(newState.categories, c => {
-        _.filter(c.tasks, t => t._id === action.id).map(t => t.completed = true);
-      });
-      break;
+      newState.categories.forEach(c => {
+        c.tasks.filter(t => t._id === action.id).forEach(t => { t.completed = true })
+      })
+      break
 
     case types.UNCOMPLETE_TODO:
-      _.forEach(newState.categories, c => {
-        _.filter(c.tasks, t => t._id === action.id).map(t => t.completed = false);
-      });
-      break;
+      newState.categories.forEach(c => {
+        c.tasks.filter(t => t._id === action.id).forEach(t => { t.completed = false })
+      })
+      break
 
     case types.OPEN_DELETE_CONFIRMATION:
       newState.deleteConfirmation = {
         open: true,
         todo: action.todo
       }
-      break;
+      break
 
     case types.CLOSE_DELETE_CONFIRMATION:
-      newState.deleteConfirmation.open = false;
-      break;
+      newState.deleteConfirmation.open = false
+      break
 
     case types.SET_BUSY:
-      newState.busy = action.busy;
-      break;    
+      newState.busy = action.busy
+      break
 
     case types.SET_ERROR:
-      newState.error = action.error;
-      break; 
+      newState.error = action.error
+      break
   }
 
-  return newState;
+  return newState
 }

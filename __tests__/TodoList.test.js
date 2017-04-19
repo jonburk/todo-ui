@@ -1,31 +1,33 @@
+/* eslint-env jest */
+
+import React from 'react'
+import PropTypes from 'prop-types'
+import { shallow, mount } from 'enzyme'
+import expect from 'expect'
+import sinon from 'sinon'
+import TodoCategory from '../components/TodoCategory'
+import BusyIndicator from '../components/BusyIndicator'
+import getMuiTheme from 'material-ui/styles/getMuiTheme'
+import injectTapEventPlugin from 'react-tap-event-plugin'
+import { List, Dialog, FloatingActionButton } from 'material-ui'
+import CheckCircleIcon from 'material-ui/svg-icons/action/check-circle'
+import AddIcon from 'material-ui/svg-icons/content/add'
+
 jest.mock(
-    'Config', 
+    'Config',
     () => {
       return {
         App: {
           api: {}
         }
       }
-    }, 
+    },
     {virtual: true}
-  );
+  )
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import { shallow, mount } from 'enzyme';
-import expect from 'expect';
-import sinon from 'sinon';
-import { TodoList } from '../components/TodoList';
-import TodoCategory from '../components/TodoCategory';
-import BusyIndicator from '../components/BusyIndicator';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import injectTapEventPlugin from "react-tap-event-plugin";
-import { List, Dialog, FlatButton, FloatingActionButton } from 'material-ui';
-import CheckCircleIcon from 'material-ui/svg-icons/action/check-circle';
-import AddIcon from 'material-ui/svg-icons/content/add';
+const { TodoList } = require('../components/TodoList')
 
-function setup(categories = [], mode = 'all', busy = false, deleteConfirmation) {
-
+function setup (categories = [], mode = 'all', busy = false, deleteConfirmation) {
   if (!deleteConfirmation) {
     deleteConfirmation = {
       open: false
@@ -46,28 +48,28 @@ function setup(categories = [], mode = 'all', busy = false, deleteConfirmation) 
       deleteConfirmation,
       busy
     }
-  };
+  }
 
   const options = {
     context: {
-      muiTheme: getMuiTheme(),
+      muiTheme: getMuiTheme()
     },
     childContextTypes: {
-      muiTheme: PropTypes.object.isRequired,
+      muiTheme: PropTypes.object.isRequired
     }
   }
 
-  const wrapper = shallow(<TodoList {...props}/>, options);
+  const wrapper = shallow(<TodoList {...props} />, options)
 
   return {
     props,
     wrapper,
     options
-  };
+  }
 }
 
-function createCategories(categoryCount = 1, tasksPerCategory = 1) {
-  const result = [];
+function createCategories (categoryCount = 1, tasksPerCategory = 1) {
+  const result = []
 
   for (let i = 0; i < categoryCount; i++) {
     const category = {
@@ -80,96 +82,95 @@ function createCategories(categoryCount = 1, tasksPerCategory = 1) {
         name: `Task ${i + 1}.${j + 1}`
       }
 
-      category.tasks.push(task);
+      category.tasks.push(task)
     }
 
-    result.push(category);
+    result.push(category)
   }
 
-  return result;
+  return result
 }
 
 describe('components', () => {
   describe('TodoList', () => {
     it('should render list with one item', () => {
-      const { wrapper } = setup(createCategories());
+      const { wrapper } = setup(createCategories())
 
-      expect(wrapper.find(List).length).toBe(1);
+      expect(wrapper.find(List).length).toBe(1)
 
-      const categories = wrapper.find(TodoCategory);
-      expect(categories.length).toBe(1);
-      expect(categories.prop('last')).toBe(true);
-    });
+      const categories = wrapper.find(TodoCategory)
+      expect(categories.length).toBe(1)
+      expect(categories.prop('last')).toBe(true)
+    })
 
     it('should render list with multiple items', () => {
-      const { wrapper, props } = setup(createCategories(2, 2));
+      const { wrapper, props } = setup(createCategories(2, 2))
 
-      expect(wrapper.find(List).length).toBe(1);
+      expect(wrapper.find(List).length).toBe(1)
 
-      const categories = wrapper.find(TodoCategory);
-      expect(categories.length).toBe(2);
+      const categories = wrapper.find(TodoCategory)
+      expect(categories.length).toBe(2)
       expect(categories.at(0).prop('category')).toBe(props.todos.categories[0])
-      expect(categories.at(0).prop('last')).toBe(false);
+      expect(categories.at(0).prop('last')).toBe(false)
       expect(categories.at(1).prop('category')).toBe(props.todos.categories[1])
-      expect(categories.at(1).prop('last')).toBe(true);
-
-    });  
+      expect(categories.at(1).prop('last')).toBe(true)
+    })
 
     it('should render the busy indicator', () => {
-      const { wrapper } = setup([], 'all', true);
+      const { wrapper } = setup([], 'all', true)
 
-      expect(wrapper.find(BusyIndicator).length).toBe(1);
-      expect(wrapper.find(List).length).toBe(0);
-    }); 
+      expect(wrapper.find(BusyIndicator).length).toBe(1)
+      expect(wrapper.find(List).length).toBe(0)
+    })
 
     it('should render the empty list message for the Today view', () => {
-      const { wrapper } = setup([], 'today');  
+      const { wrapper } = setup([], 'today')
 
-      expect(wrapper.find('.empty-list').length).toBe(1);
-      expect(wrapper.find(CheckCircleIcon).length).toBe(1);  
-      const message = wrapper.find('.empty-list-message');
-      expect(message.length).toBe(1);
-      expect(message.text()).toBe('Nothing left to do!');
-    });  
+      expect(wrapper.find('.empty-list').length).toBe(1)
+      expect(wrapper.find(CheckCircleIcon).length).toBe(1)
+      const message = wrapper.find('.empty-list-message')
+      expect(message.length).toBe(1)
+      expect(message.text()).toBe('Nothing left to do!')
+    })
 
     it('should render the empty list message for the Week view', () => {
-      const { wrapper } = setup([], 'week');  
+      const { wrapper } = setup([], 'week')
 
-      expect(wrapper.find('.empty-list').length).toBe(1);
-      expect(wrapper.find(CheckCircleIcon).length).toBe(1);  
-      const message = wrapper.find('.empty-list-message');
-      expect(message.length).toBe(1);
-      expect(message.text()).toBe('Nothing left to do!');
-    });  
+      expect(wrapper.find('.empty-list').length).toBe(1)
+      expect(wrapper.find(CheckCircleIcon).length).toBe(1)
+      const message = wrapper.find('.empty-list-message')
+      expect(message.length).toBe(1)
+      expect(message.text()).toBe('Nothing left to do!')
+    })
 
     it('should render the empty list message for the All view', () => {
-      const { wrapper } = setup([]);
+      const { wrapper } = setup([])
 
-      expect(wrapper.find('.empty-list').length).toBe(1);
-      const message = wrapper.find('.empty-list-message');
-      expect(message.length).toBe(1);
-      expect(message.text()).toBe('Begin by adding a task…');      
-    }); 
+      expect(wrapper.find('.empty-list').length).toBe(1)
+      const message = wrapper.find('.empty-list-message')
+      expect(message.length).toBe(1)
+      expect(message.text()).toBe('Begin by adding a task…')
+    })
 
     it('should navigate to the Add page', () => {
-      const { wrapper, props } = setup();    
+      const { wrapper, props } = setup()
 
-      const addButton = wrapper.find(FloatingActionButton);
-      expect(addButton.length).toBe(1);
-      expect(addButton.find(AddIcon).length).toBe(1);
+      const addButton = wrapper.find(FloatingActionButton)
+      expect(addButton.length).toBe(1)
+      expect(addButton.find(AddIcon).length).toBe(1)
 
-      addButton.simulate('touchTap');
-      expect(props.actions.push.mock.calls.length).toBe(1);
-      expect(props.actions.push.mock.calls[0][0]).toBe('add');       
-    }); 
+      addButton.simulate('touchTap')
+      expect(props.actions.push.mock.calls.length).toBe(1)
+      expect(props.actions.push.mock.calls[0][0]).toBe('add')
+    })
 
     it('should hide the Delete confirmation by default', () => {
-      const { wrapper } = setup();
+      const { wrapper } = setup()
 
-      const dialog = wrapper.find(Dialog);
-      expect(dialog.length).toBe(1);
-      expect(dialog.prop('open')).toBe(false);
-    });
+      const dialog = wrapper.find(Dialog)
+      expect(dialog.length).toBe(1)
+      expect(dialog.prop('open')).toBe(false)
+    })
 
     it('should show the Delete confirmation and allow cancellation', () => {
       const deleteConfirmation = {
@@ -177,24 +178,24 @@ describe('components', () => {
         todo: {
           name: 'Test Item'
         }
-      };
+      }
 
-      const { wrapper, options, props } = setup([], 'all', false, deleteConfirmation);
+      const { wrapper, options, props } = setup([], 'all', false, deleteConfirmation)
 
-      const dialog = wrapper.find(Dialog);
-      expect(dialog.length).toBe(1);
-      expect(dialog.prop('open')).toBe(true);
-      expect(dialog.childAt(0).text()).toBe('Delete Test Item?');
+      const dialog = wrapper.find(Dialog)
+      expect(dialog.length).toBe(1)
+      expect(dialog.prop('open')).toBe(true)
+      expect(dialog.childAt(0).text()).toBe('Delete Test Item?')
 
-      const actions = dialog.prop('actions');
-      expect(actions.length).toBe(2);
+      const actions = dialog.prop('actions')
+      expect(actions.length).toBe(2)
 
-      const button = shallow(actions[0], options);
-      expect(button.find({ label: 'Cancel' }).length).toBe(1);
+      const button = shallow(actions[0], options)
+      expect(button.find({ label: 'Cancel' }).length).toBe(1)
 
-      button.simulate('touchTap');
-      expect(props.actions.closeDeleteConfirmation.mock.calls.length).toBe(1);
-    }); 
+      button.simulate('touchTap')
+      expect(props.actions.closeDeleteConfirmation.mock.calls.length).toBe(1)
+    })
 
     it('should show the Delete confirmation and allow confirmation', () => {
       const deleteConfirmation = {
@@ -203,36 +204,36 @@ describe('components', () => {
           _id: '1',
           name: 'Test Item'
         }
-      };
+      }
 
-      const { wrapper, options, props } = setup([], 'all', false, deleteConfirmation);
+      const { wrapper, options, props } = setup([], 'all', false, deleteConfirmation)
 
-      const dialog = wrapper.find(Dialog);
-      expect(dialog.length).toBe(1);
-      expect(dialog.prop('open')).toBe(true);
-      expect(dialog.childAt(0).text()).toBe('Delete Test Item?');
+      const dialog = wrapper.find(Dialog)
+      expect(dialog.length).toBe(1)
+      expect(dialog.prop('open')).toBe(true)
+      expect(dialog.childAt(0).text()).toBe('Delete Test Item?')
 
-      const actions = dialog.prop('actions');
-      expect(actions.length).toBe(2);
+      const actions = dialog.prop('actions')
+      expect(actions.length).toBe(2)
 
-      const button = shallow(actions[1], options);
-      expect(button.find({ label: 'Delete' }).length).toBe(1);
+      const button = shallow(actions[1], options)
+      expect(button.find({ label: 'Delete' }).length).toBe(1)
 
-      button.simulate('touchTap');
-      expect(props.actions.deleteTodo.mock.calls.length).toBe(1);  
-      expect(props.actions.deleteTodo.mock.calls[0][0]).toBe('1'); 
-    });
+      button.simulate('touchTap')
+      expect(props.actions.deleteTodo.mock.calls.length).toBe(1)
+      expect(props.actions.deleteTodo.mock.calls[0][0]).toBe('1')
+    })
 
     it('should get the todo list on mount', () => {
-      injectTapEventPlugin();
-      const { options, props } = setup([], 'all');
+      injectTapEventPlugin()
+      const { options, props } = setup([], 'all')
 
-      sinon.spy(TodoList.prototype, 'componentDidMount');
-      const wrapper = mount(<TodoList {...props}/>, options);
+      sinon.spy(TodoList.prototype, 'componentDidMount')
+      mount(<TodoList {...props} />, options)
 
-      expect(TodoList.prototype.componentDidMount.calledOnce).toBeTruthy();
-      expect(props.actions.getTodos.mock.calls.length).toBe(1);  
-      expect(props.actions.getTodos.mock.calls[0][0]).toBe('all'); 
-    });
+      expect(TodoList.prototype.componentDidMount.calledOnce).toBeTruthy()
+      expect(props.actions.getTodos.mock.calls.length).toBe(1)
+      expect(props.actions.getTodos.mock.calls[0][0]).toBe('all')
+    })
   })
 })
