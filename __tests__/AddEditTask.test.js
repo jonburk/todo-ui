@@ -26,6 +26,7 @@ const { AddEditTask, validate } = require('../components/AddEditTask')
 // The redux-form Field component only works inside of a component wrapped in ReduxForm.
 // Create a mock to render the target component instead of the field.
 const ReduxForm = require.requireActual('redux-form')
+delete ReduxForm.Field
 
 ReduxForm.Field = (props) => {
   const { component: Component, ...others } = props
