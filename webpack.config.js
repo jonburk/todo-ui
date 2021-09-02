@@ -12,7 +12,7 @@ module.exports = {
     bundle: ['babel-polyfill', './src/index.jsx', './src/main.css', './src/index.html']
   },
   output: {
-    path: path.join(__dirname, '../todo-service/static'),
+    path: path.join(__dirname, 'dist'),
     filename: '[name].js'
   },
   plugins: BUILD ? [
