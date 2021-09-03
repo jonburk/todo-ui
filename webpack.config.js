@@ -30,13 +30,13 @@ module.exports = {
     new webpack.optimize.UglifyJsPlugin({minimize: true})
   ] : [],
   module: {
-    loaders: [{
+    rules: [{
         // JS LOADER
         // Reference: https://github.com/babel/babel-loader
         // Transpile .js files using babel-loader
         // Compiles ES6 and ES7 into ES5 code
       test: /\.jsx?$/i,
-      loaders: ['babel-loader'],
+      loader: 'babel-loader',
       exclude: /node_modules/
     },
       { test: /\.html$/, loader: 'file-loader?name=[name].[ext]' },
