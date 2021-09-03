@@ -43,7 +43,7 @@ jest.mock(
   }
 )
 
-const routerMock = require.requireMock('react-router-redux')
+const routerMock = jest.requireMock('react-router-redux')
 const actions = require('../actions/todos')
 
 const mockStore = configureMockStore([ thunk ])
