@@ -4,6 +4,7 @@ const webpack = require('webpack')
 const BUILD = process.env.ENV_TYPE === 'production'
 
 module.exports = {
+  mode: process.env.ENV_TYPE || 'development',
   devtool: BUILD ? 'source-map' : 'eval',
   resolve: {
     extensions: ['.js', '.jsx', '.css']
@@ -15,20 +16,6 @@ module.exports = {
     path: path.join(__dirname, 'dist'),
     filename: '[name].js'
   },
-  plugins: BUILD ? [
-    new webpack.DefinePlugin({
-      'process.env': {
-        'NODE_ENV': JSON.stringify('production')
-      }
-    }),
-    // Reference: http://webpack.github.io/docs/list-of-plugins.html#noerrorsplugin
-    // Only emit files when there are no errors
-
-    new webpack.NoEmitOnErrorsPlugin(),
-    // Reference: http://webpack.github.io/docs/list-of-plugins.html#uglifyjsplugin
-    // Minify all javascript, switch loaders to minimizing mode
-    new webpack.optimize.UglifyJsPlugin({minimize: true})
-  ] : [],
   module: {
     rules: [{
         // JS LOADER
