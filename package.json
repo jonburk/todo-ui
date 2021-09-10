@@ -10,6 +10,9 @@
     "build": "webpack --config webpack.prod.js",
     "build-dev": "webpack --progress --config webpack.dev.js"
   },
+  "jest": {
+    "testEnvironment": "jsdom"
+  },
   "author": "Jonathan Burk",
   "license": "UNLICENSED",
   "private": true,
