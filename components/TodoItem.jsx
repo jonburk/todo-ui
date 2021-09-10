@@ -35,7 +35,7 @@ export class TodoItem extends Component {
       </IconMenu>
     )
 
-    const overdueColor = '#cb0044'
+    const overdueColor = '#d10e38'
     const overdue = (todo.dueDate && moment().startOf('day').isAfter(todo.dueDate))
     const checkBoxColor = overdue ? overdueColor : palette.accent1Color
 
