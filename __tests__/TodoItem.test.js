@@ -174,7 +174,7 @@ describe('components', () => {
 
       const { wrapper } = setup(todo)
 
-      const overdueColor = '#cb0044'
+      const overdueColor = '#d10e38'
       const listItem = wrapper.find(ListItem)
       expect(listItem.prop('style').color).toBe(overdueColor)
       expect(shallow(listItem.prop('secondaryText')).find('div').at(1).prop('style').color).toBe(overdueColor)
